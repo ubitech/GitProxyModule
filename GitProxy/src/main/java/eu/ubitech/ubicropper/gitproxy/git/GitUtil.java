@@ -2,6 +2,9 @@ package eu.ubitech.ubicropper.gitproxy.git;
 
 import eu.ubitech.ubicropper.gitproxy.logger.LoggerFactory;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.jgit.api.AddCommand;
@@ -16,8 +19,12 @@ import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.errors.CorruptObjectException;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.treewalk.TreeWalk;
 
 /**
  *
@@ -25,6 +32,11 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class GitUtil {
     private final static Logger LOGGER = LoggerFactory.getLogger(); 
+    
+    public static boolean checkThatExistsAndProperDirectory(String sgitworkDir){
+        File file = new File(sgitworkDir);
+        return file.exists() && file.isDirectory();
+    }//EoM    
     
     public static void createGitRepo(String sgitworkDir) {
         try {
@@ -73,14 +85,9 @@ public class GitUtil {
 	} catch (GitAPIException ex) {
             Logger.getLogger(GitUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//EoM   
+    }//EoM       
     
-    public static boolean checkThatExistsAndProperDirectory(String sgitworkDir){
-        File file = new File(sgitworkDir);
-        return file.exists() && file.isDirectory();
-    }//EoM
-    
-    public static Iterable<RevCommit> log(Git git) {
+    public static Iterable<RevCommit> getRevisions(Git git) {
 	Iterable<RevCommit> ret=null;
         LogCommand log = git.log();
 	try {
@@ -95,6 +102,35 @@ public class GitUtil {
     
     //List all files of a Commit e.g.
     //git ls-tree -r --name-only 79813c0d381a9db2e8c2c609b790c7baa47d453f
-    
+    public static ArrayList getFilesOfCommit(Git git,String revision){
+        ArrayList array = new ArrayList();
+        RevCommit revCommit = null;
+        try {
+            Iterable<RevCommit> revs = GitUtil.getRevisions(git);
+            for (Iterator<RevCommit> it = revs.iterator(); it.hasNext();) {
+                revCommit = it.next();
+                if (revCommit.getName().equalsIgnoreCase(revision)) break;
+            }//for            
+            if (revCommit!=null){
+                RevTree tree = revCommit.getTree();
+                LOGGER.info("Having tree: " + tree);            
+                TreeWalk treeWalk = new TreeWalk(git.getRepository());
+                treeWalk.addTree(tree);
+                treeWalk.setRecursive(true);
+                while (treeWalk.next()) {
+                    LOGGER.info("found: " + treeWalk.getPathString());
+                    array.add( treeWalk.getPathString() );
+                }//while                
+            }//if
+        } //EoM
+        catch (IncorrectObjectTypeException ex) {
+            Logger.getLogger(GitUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CorruptObjectException ex) {
+            Logger.getLogger(GitUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GitUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return array;
+    }//EoM
     
 }//EoC

@@ -4,6 +4,7 @@ import eu.ubitech.ubicropper.gitproxy.config.Configuration;
 import eu.ubitech.ubicropper.gitproxy.logger.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -71,9 +72,8 @@ public class GitService implements Runnable {
                    ) {
                     LOGGER.info("Performing Add and Commit");
                     GitUtil.addAndCommit( git , (new Date()).toString() , "." );
-                    //test
-
-
+                    //---------Test
+                    
                 } else {
                     LOGGER.info("Nothing to Commit");
                 }
@@ -99,10 +99,14 @@ public class GitService implements Runnable {
     
     public synchronized boolean isAlive(){
         return this.isalive;
-    }
+    }//EoM
     
     public Iterable<RevCommit> getRevisions(){
-        return GitUtil.log(git);
-    }
+        return GitUtil.getRevisions(git);
+    }//EoM
     
-}
+    public ArrayList<String> getFilesOfCommit(String revision){
+        return GitUtil.getFilesOfCommit(git, revision);
+    }//EoM
+
+}//EoC
