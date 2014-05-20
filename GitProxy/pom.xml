@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.ubitech.ubicropper</groupId>
+  <artifactId>GitProxy</artifactId>
+  <packaging>jar</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>GitProxy</name>
+  <url>http://www.ubitech.eu/ubicropper/GitProxy</url>
+  <description>GitProxy Module</description>
+
+  
+   <properties>
+        <!-- core -->
+        <project.source.charset>UTF-8</project.source.charset>
+        <project.source.encoding>UTF-8</project.source.encoding>
+        <java.version.source>1.6</java.version.source>
+        <java.version.target>1.6</java.version.target>
+        <!-- -->
+        <jetty.version>9.1.0.M0</jetty.version>	
+        <jgit.version>3.3.2.201404171909-r</jgit.version> 
+    </properties>  
+
+  <dependencies>
+      
+    
+      
+    <dependency>
+       <groupId>org.eclipse.jgit</groupId>
+       <artifactId>org.eclipse.jgit</artifactId>
+       <version>${jgit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.aggregate</groupId>
+      <artifactId>jetty-all-server</artifactId>
+      <version>7.6.3.v20120416</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+
+    <build>
+	<finalName>${project.artifactId}</finalName>  	        
+	<plugins>	  
+	  <!-- JAVA 1.6 compatibility-->  
+	  <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <charset>${project.source.charset}</charset>
+                    <encoding>${project.source.encoding}</encoding>
+                    <source>${java.version.source}</source>
+                    <target>${java.version.target}</target>
+                </configuration>
+            </plugin> 
+            <!-- Test plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/Test*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <!-- Jar plugin  -->
+            <plugin> 
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId> 
+                <version>2.4</version>
+                <configuration>	                
+                    <archive>                         
+                        <addMavenDescriptor>false</addMavenDescriptor>                     
+                        <manifest>
+                            <mainClass>eu.ubitech.ubicropper.gitproxy.controller.GitProxyController</mainClass>
+                        </manifest>
+                    </archive>                 
+                </configuration> 
+            </plugin> 	    
+            <!-- Include Dependencies -->
+            <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <executions>
+                <execution>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>single</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>                  
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                    <archive>                         
+                        <addMavenDescriptor>false</addMavenDescriptor>                     
+                        <manifest>
+                            <mainClass>eu.ubitech.ubicropper.gitproxy.controller.GitProxyController</mainClass>
+                        </manifest>
+                    </archive>  
+              </configuration>
+            </plugin>
+            
+        </plugins>
+    </build>
+        
+    <profiles>	
+    </profiles>
+    
+</project>

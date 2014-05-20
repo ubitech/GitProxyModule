@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.ubitech.ubicropper</groupId>
+  <artifactId>GitProxyClient</artifactId>
+  <packaging>jar</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>GitProxyClient</name>
+  <url>http://www.ubitech.eu/ubicropper/GitProxyClient</url>
+  <description>GitProxyClient Module</description>
+  
+   <properties>
+        <!-- core -->
+        <project.source.charset>UTF-8</project.source.charset>
+        <project.source.encoding>UTF-8</project.source.encoding>
+        <java.version.source>1.6</java.version.source>
+        <java.version.target>1.6</java.version.target>
+        <!-- -->
+    </properties>  
+
+  <dependencies>
+
+  </dependencies>
+
+    <build>
+	<finalName>${project.artifactId}</finalName>  	        
+	<plugins>	  
+	  <!-- JAVA 1.6 compatibility-->  
+	  <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <charset>${project.source.charset}</charset>
+                    <encoding>${project.source.encoding}</encoding>
+                    <source>${java.version.source}</source>
+                    <target>${java.version.target}</target>
+                </configuration>
+            </plugin> 
+            <!-- Test plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/Test*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <!-- jaxws -->
+            <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>jaxws-maven-plugin</artifactId>
+                  <version>1.12</version>
+                  <executions>
+                      <execution>
+                          <id>generate-reports-ws-code</id>
+                          <phase>initialize</phase>
+                          <goals>
+                              <goal>wsimport</goal>
+                          </goals>
+                          <configuration>
+                              <packageName>eu.ubitech.ubicropper.gitproxy.service</packageName>
+                              <wsdlFiles>                            
+                                  <wsdlFile>GitProxy.wsdl</wsdlFile> 
+                              </wsdlFiles>
+                              <verbose>true</verbose>
+                              <sourceDestDir>${project.build.sourceDirectory}</sourceDestDir>
+                          </configuration>
+                      </execution>
+                  </executions>
+              </plugin>            	    
+	    
+        </plugins>
+    </build>
+       
+    <profiles>	
+    </profiles>
+    
+</project>

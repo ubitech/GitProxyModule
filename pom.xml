@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.ubitech.ubicropper</groupId>
+  <artifactId>gitproxy-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>GitProxyParent</name>
+  <url>http://www.ubitech.eu/gitproxy</url>
+  <description>GitProxy Modules</description>
+  
+  <modules>   
+	<module>GitProxy</module>
+	<module>GitProxyClient</module>
+   </modules>
+                        
+   <properties>
+        <project.source.charset>UTF-8</project.source.charset>
+        <project.source.encoding>UTF-8</project.source.encoding>
+        <java.version.source>1.6</java.version.source>
+        <java.version.target>1.6</java.version.target>
+    </properties>        
+    
+    <build>	        
+	<plugins>	  
+	  <!-- JAVA 1.6 compatibility-->  
+	  <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <charset>${project.source.charset}</charset>
+                    <encoding>${project.source.encoding}</encoding>
+                    <source>${java.version.source}</source>
+                    <target>${java.version.target}</target>
+                </configuration>
+            </plugin> 
+            <!-- Test plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/Test*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    
+  <repositories>
+        <repository>
+	    <id>MavenCentral</id>
+	    <name>Maven repository</name>
+	    <url>http://repo1.maven.org/maven2</url>
+	    <releases>
+		<enabled>true</enabled>
+	    </releases>
+	    <snapshots>
+		<enabled>false</enabled>
+	    </snapshots>
+	</repository>  
+	<repository>
+	    <id>Jboss repository</id>
+	    <url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+	    <releases>
+	    <enabled>true</enabled>
+	    </releases>
+	</repository>
+	<!-- UBITECH THIRDPARTY 
+	<repository>
+	    <id>ubitech-thirdparty</id>
+	    <name>UBITECH thirdparty</name>
+	    <url>http://192.168.1.202:6060/nexus/content/repositories/thirdparty/</url>
+	</repository>	-->	
+	<!-- UBITECH RELEASES 	
+	<repository>
+	    <id>ubitech-releases</id>
+	    <name>UBITECH release repository</name>
+	    <url>http://192.168.1.202:6060/nexus/content/repositories/releases/</url>
+	</repository>	-->
+	<!-- UBITECH SNAPSHOTS 
+	<repository>
+	    <id>ubitech-snapshots</id>
+	    <name>UBITECH snapshot repository</name>
+	    <url>http://192.168.1.202:6060/nexus/content/repositories/snapshots/</url>
+	</repository>	-->
+  </repositories> 
+  
+    
+    <profiles>     
+      <!--Development Profile -->
+        <profile>
+            <id>development</id>
+            <activation>
+                 <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+            </properties>
+        </profile>
+	
+	<!--Deployment Profile
+        <profile>
+            <id>deployment</id>
+            <properties>
+            </properties>
+            <distributionManagement>
+                <repository>
+                    <uniqueVersion>true</uniqueVersion>
+                    <id>ubitech-releases</id>
+                    <name>UBITECH release repository</name>
+                    <url>http://192.168.1.202:6060/nexus/content/repositories/releases/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>ubitech-snapshots</id>
+                    <name>UBITECH snapshot repository</name>
+                    <url>http://192.168.1.202:6060/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+	-->	
+    </profiles>
+        
+</project>
