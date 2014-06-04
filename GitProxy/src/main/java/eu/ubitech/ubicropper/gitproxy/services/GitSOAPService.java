@@ -57,6 +57,12 @@ public class GitSOAPService {
     }//EoM      
     
     
-    
+    public ArrayList<String> getFilesBetweenTwoCommits(String token,String revision1,String revision2)  {
+        LOGGER.info("invoked");
+        ArrayList ret = new ArrayList();
+        GitService gitservice = GitServiceFactory.getInstance();
+        ret = gitservice.getFilesBetweenTwoCommits(revision1,revision2);
+        return ret;
+    }//EoM       
     
 }//EoC

@@ -43,6 +43,26 @@ public interface GitSOAPService {
 
     /**
      * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getFilesBetweenTwoCommits", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetFilesBetweenTwoCommits")
+    @ResponseWrapper(localName = "getFilesBetweenTwoCommitsResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetFilesBetweenTwoCommitsResponse")
+    public List<String> getFilesBetweenTwoCommits(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2);
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns java.lang.String

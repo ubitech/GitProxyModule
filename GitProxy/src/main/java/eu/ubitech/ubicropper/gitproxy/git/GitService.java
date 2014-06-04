@@ -109,4 +109,8 @@ public class GitService implements Runnable {
         return GitUtil.getFilesOfCommit(git, revision);
     }//EoM
 
+    public ArrayList<String> getFilesBetweenTwoCommits(String revision1,String revision2){
+        return GitUtil.getFilesBetweenTwoCommits(git, revision1, revision2);
+    }//EoM    
+    
 }//EoC

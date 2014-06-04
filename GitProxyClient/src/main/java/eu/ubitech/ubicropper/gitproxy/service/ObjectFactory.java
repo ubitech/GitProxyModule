@@ -26,10 +26,12 @@ public class ObjectFactory {
 
     private final static QName _GetAllRevisionsResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getAllRevisionsResponse");
     private final static QName _GetLatestRevisionResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getLatestRevisionResponse");
+    private final static QName _GetFilesBetweenTwoCommitsResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesBetweenTwoCommitsResponse");
     private final static QName _GetLatestRevision_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getLatestRevision");
     private final static QName _GetFilesOfCommit_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommit");
     private final static QName _Echo_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echo");
     private final static QName _EchoResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echoResponse");
+    private final static QName _GetFilesBetweenTwoCommits_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesBetweenTwoCommits");
     private final static QName _GetAllRevisions_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getAllRevisions");
     private final static QName _GetFilesOfCommitResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommitResponse");
 
@@ -41,14 +43,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAllRevisionsResponse }
-     * 
-     */
-    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
-        return new GetAllRevisionsResponse();
-    }
-
-    /**
      * Create an instance of {@link Echo }
      * 
      */
@@ -57,19 +51,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetLatestRevisionResponse }
+     * Create an instance of {@link EchoResponse }
      * 
      */
-    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
-        return new GetLatestRevisionResponse();
+    public EchoResponse createEchoResponse() {
+        return new EchoResponse();
     }
 
     /**
-     * Create an instance of {@link GetLatestRevision }
+     * Create an instance of {@link GetAllRevisionsResponse }
      * 
      */
-    public GetLatestRevision createGetLatestRevision() {
-        return new GetLatestRevision();
+    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
+        return new GetAllRevisionsResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetFilesBetweenTwoCommits }
+     * 
+     */
+    public GetFilesBetweenTwoCommits createGetFilesBetweenTwoCommits() {
+        return new GetFilesBetweenTwoCommits();
     }
 
     /**
@@ -81,11 +83,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EchoResponse }
+     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
      * 
      */
-    public EchoResponse createEchoResponse() {
-        return new EchoResponse();
+    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
+        return new GetFilesBetweenTwoCommitsResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetLatestRevision }
+     * 
+     */
+    public GetLatestRevision createGetLatestRevision() {
+        return new GetLatestRevision();
     }
 
     /**
@@ -105,6 +115,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetLatestRevisionResponse }
+     * 
+     */
+    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
+        return new GetLatestRevisionResponse();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAllRevisionsResponse }{@code >}}
      * 
      */
@@ -120,6 +138,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getLatestRevisionResponse")
     public JAXBElement<GetLatestRevisionResponse> createGetLatestRevisionResponse(GetLatestRevisionResponse value) {
         return new JAXBElement<GetLatestRevisionResponse>(_GetLatestRevisionResponse_QNAME, GetLatestRevisionResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesBetweenTwoCommitsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getFilesBetweenTwoCommitsResponse")
+    public JAXBElement<GetFilesBetweenTwoCommitsResponse> createGetFilesBetweenTwoCommitsResponse(GetFilesBetweenTwoCommitsResponse value) {
+        return new JAXBElement<GetFilesBetweenTwoCommitsResponse>(_GetFilesBetweenTwoCommitsResponse_QNAME, GetFilesBetweenTwoCommitsResponse.class, null, value);
     }
 
     /**
@@ -156,6 +183,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "echoResponse")
     public JAXBElement<EchoResponse> createEchoResponse(EchoResponse value) {
         return new JAXBElement<EchoResponse>(_EchoResponse_QNAME, EchoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesBetweenTwoCommits }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getFilesBetweenTwoCommits")
+    public JAXBElement<GetFilesBetweenTwoCommits> createGetFilesBetweenTwoCommits(GetFilesBetweenTwoCommits value) {
+        return new JAXBElement<GetFilesBetweenTwoCommits>(_GetFilesBetweenTwoCommits_QNAME, GetFilesBetweenTwoCommits.class, null, value);
     }
 
     /**
