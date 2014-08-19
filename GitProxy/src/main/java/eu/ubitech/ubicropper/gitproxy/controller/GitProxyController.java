@@ -50,9 +50,14 @@ public class GitProxyController {
         try {
             String path = new java.io.File(".").getCanonicalPath();
             LOGGER.log(Level.INFO, "PATH:{0}", path);
-            input = new FileInputStream("gitproxy.properties");
+            //input = new FileInputStream("gitproxy.properties");
+            input =  this.getClass().getResourceAsStream("/gitproxy.properties");
+            
+           
             // load a properties file
             prop.load(input);
+            
+            
             // get the property value and print it out
             Configuration.port =        Integer.parseInt( prop.getProperty("port").trim() );
             Configuration.ScannedFolder = prop.getProperty("ScannedFolder").trim();

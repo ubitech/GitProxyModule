@@ -6,6 +6,8 @@ import eu.ubitech.ubicropper.gitproxy.service.logger.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +21,22 @@ public class UpdateController {
     private final Properties prop = new Properties();
     private InputStream input = null;
     
+    public Map  sincronize(String dbport,String dbip,String username ,String password ,String dbname,String wsendpoint,String wstoken,String docroot, String remoteseparator ,String provinceid){
+        UpdateController updatecontroller = new UpdateController();
+        updatecontroller.readProperties(dbport,dbip, username , password , dbname, wsendpoint, wstoken, docroot,  remoteseparator , provinceid);
+        DBSynchronizer dbsynchronizer  = new DBSynchronizer();
+        Map logMap = dbsynchronizer.SynchronizeDatabase();
+        return logMap;
+    }
+    
+     public  Map sincronize(){
+        UpdateController updatecontroller = new UpdateController();
+        updatecontroller.readProperties();
+        DBSynchronizer dbsynchronizer  = new DBSynchronizer();
+        Map logMap = dbsynchronizer.SynchronizeDatabase();
+        return logMap;
+    }
+     
     public static void main(String[] args) {
         UpdateController updatecontroller = new UpdateController();
         updatecontroller.readProperties();
@@ -39,7 +57,11 @@ public class UpdateController {
         try {
             String path = new java.io.File(".").getCanonicalPath();
             LOGGER.log(Level.INFO, "PATH:{0}", path);
-            input = new FileInputStream("client.properties");
+            //input = new FileInputStream("client.properties");
+            
+            input =  this.getClass().getResourceAsStream("/client.properties");
+            
+            
             // load a properties file
             prop.load(input);
             // get the property value and print it out
@@ -54,6 +76,8 @@ public class UpdateController {
             Configuration.remoteseparator     =   prop.getProperty("remoteseparator").trim();            
             Configuration.provinceid = Integer.parseInt( prop.getProperty("provinceid").trim() );
             
+           
+            
         } catch (IOException ex) {
             LOGGER.severe(ex.getMessage());
         } finally {
@@ -65,6 +89,31 @@ public class UpdateController {
                 }
             }
         }
-    }//EoM readproperties    
+    }//EoM readproperties   
+    
+    public void readProperties(String dbport,
+            String dbip,
+            String username ,
+            String password ,
+            String dbname,
+            String wsendpoint,
+            String wstoken,
+            String docroot, 
+            String remoteseparator ,
+            String provinceid) {
+       
+            // get the property value and print it out
+            Configuration.dbport      =    Integer.parseInt(dbport);
+            Configuration.dbip        =   dbip;            
+            Configuration.username    =   username;
+            Configuration.password    =   password;
+            Configuration.dbname      =   dbname; 
+            Configuration.wsendpoint  =   wsendpoint;
+            Configuration.wstoken     =   wstoken;            
+            Configuration.docroot     =   docroot;
+            Configuration.remoteseparator     =   remoteseparator;            
+            Configuration.provinceid =  Integer.parseInt(provinceid);
+
+    }//EoM readproperties  
     
 }//EoC

@@ -20,12 +20,13 @@ import org.eclipse.jgit.revwalk.RevCommit;
  * @author Panagiotis Gouvas
  */
 public class GitService implements Runnable {
-    private final static Logger LOGGER = LoggerFactory.getLogger();    
-    private final String gitdir  = Configuration.ScannedFolder;
-    private final String gitfile = gitdir+File.separatorChar+".git";
+
+    private final static Logger LOGGER = LoggerFactory.getLogger();
+    private final String gitdir = Configuration.ScannedFolder;
+    private final String gitfile = gitdir + File.separatorChar + ".git";
     private boolean isalive = true;
     private Git git;
-    
+
     GitService() {
         try {
             Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
@@ -38,12 +39,12 @@ public class GitService implements Runnable {
             git = Git.open(new File(gitdir));
         } catch (IOException ex) {
             Logger.getLogger(GitService.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     @Override
-    public void run () {
-        while (isalive){
+    public void run() {
+        while (isalive) {
             try {
                 LOGGER.info("Thread Working.............");
                 if (!new File(gitfile).exists()) {
@@ -54,33 +55,33 @@ public class GitService implements Runnable {
                 StatusCommand status = git.status();
                 org.eclipse.jgit.api.Status ret = status.call();
                 LOGGER.info(
-                    "isClean       :"+ret.isClean()               +"\n"+
-                    "getAdded      :"+ret.getAdded().size()       +"\n"+
-                    "getChanged    :"+ret.getChanged().size()     +"\n"+
-                    "getConflicting:"+ret.getConflicting().size() +"\n"+ 
-                    "getMissing    :"+ret.getMissing().size()     +"\n"+
-                    "getModified   :"+ret.getModified().size()    +"\n"+
-                    "getRemoved    :"+ret.getRemoved().size()     +"\n"+
-                    "getUntracked  :"+ret.getUntracked().size()   +"\n"+
-                    "getUntrackedFolders  :"+ret.getUntrackedFolders().size()   
+                        "isClean       :" + ret.isClean() + "\n"
+                        + "getAdded      :" + ret.getAdded().size() + "\n"
+                        + "getChanged    :" + ret.getChanged().size() + "\n"
+                        + "getConflicting:" + ret.getConflicting().size() + "\n"
+                        + "getMissing    :" + ret.getMissing().size() + "\n"
+                        + "getModified   :" + ret.getModified().size() + "\n"
+                        + "getRemoved    :" + ret.getRemoved().size() + "\n"
+                        + "getUntracked  :" + ret.getUntracked().size() + "\n"
+                        + "getUntrackedFolders  :" + ret.getUntrackedFolders().size()
                 );
-                //condition to add and Commit
-                if ( !ret.getUntracked().isEmpty()          ||  //new File Added
-                     //!ret.getUntrackedFolders().isEmpty()   ||  //new Folder Added --Folders should not be changed
-                     !ret.getMissing().isEmpty()            ||  //File Deleted
-                     !ret.getModified().isEmpty()             //File Modified
-                   ) {
-                    LOGGER.info("Performing Add and Commit");
-                    GitUtil.addAndCommit( git , (new Date()).toString() , "." );
-                    //---------Test
+                /* condition to add and Commit*/ 
+                 if ( !ret.getUntracked().isEmpty()          ||  //new File Added
+                 //!ret.getUntrackedFolders().isEmpty()   ||  //new Folder Added --Folders should not be changed
+                 !ret.getMissing().isEmpty()            ||  //File Deleted
+                 !ret.getModified().isEmpty()             //File Modified
+                 ) {
+                 LOGGER.info("Performing Add and Commit");
+                 GitUtil.addAndCommit( git , (new Date()).toString() , "." );
+                 //---------Test
                     
-                } else {
-                    LOGGER.info("Nothing to Commit");
-                }
-                
+                 } else {
+                 LOGGER.info("Nothing to Commit yet");
+                 }
+           
                 //Default Threading Policy
                 Thread.sleep(Configuration.timeout);
-                
+
             } catch (InterruptedException ex) {
                 Logger.getLogger(GitService.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -92,25 +93,51 @@ public class GitService implements Runnable {
             }
         }//while
     }//EoM run
-        
-    public synchronized void terminate(){
+
+    public synchronized void terminate() {
         this.isalive = false;
     }//EoM
-    
-    public synchronized boolean isAlive(){
+
+    public synchronized boolean isAlive() {
         return this.isalive;
     }//EoM
-    
-    public Iterable<RevCommit> getRevisions(){
+
+    public Iterable<RevCommit> getRevisions() {
         return GitUtil.getRevisions(git);
     }//EoM
-    
-    public ArrayList<String> getFilesOfCommit(String revision){
+
+    public ArrayList<String> getFilesOfCommit(String revision) {
         return GitUtil.getFilesOfCommit(git, revision);
     }//EoM
 
-    public ArrayList<String> getFilesBetweenTwoCommits(String revision1,String revision2){
+    public ArrayList<String> getFilesBetweenTwoCommits(String revision1, String revision2) {
         return GitUtil.getFilesBetweenTwoCommits(git, revision1, revision2);
     }//EoM    
-    
+
+    /*
+    public void addAndCommitFilesByDocroot(String docroot) {
+        //return GitUtil.getFilesBetweenTwoCommits(git, revision1, revision2);
+        try {
+            
+            StatusCommand status = git.status();
+            org.eclipse.jgit.api.Status ret = status.call();
+            // condition to add and Commit /
+            if (!ret.getUntracked().isEmpty() || //new File Added
+                !ret.getMissing().isEmpty() || //File Deleted
+                !ret.getModified().isEmpty() //File Modified
+                    ) {
+                LOGGER.info("Performing Add and Commit");
+                if(docroot){
+                    GitUtil.addAndCommit(git, (new Date()).toString(), ".");
+                    //---------Test
+                }
+                
+
+            }
+
+        } catch (GitAPIException ex) {
+            Logger.getLogger(GitService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//EoM  
+*/
 }//EoC

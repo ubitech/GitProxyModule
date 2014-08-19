@@ -43,27 +43,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetLatestRevision }
+     * 
+     */
+    public GetLatestRevision createGetLatestRevision() {
+        return new GetLatestRevision();
+    }
+
+    /**
      * Create an instance of {@link Echo }
      * 
      */
     public Echo createEcho() {
         return new Echo();
-    }
-
-    /**
-     * Create an instance of {@link EchoResponse }
-     * 
-     */
-    public EchoResponse createEchoResponse() {
-        return new EchoResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetAllRevisionsResponse }
-     * 
-     */
-    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
-        return new GetAllRevisionsResponse();
     }
 
     /**
@@ -75,6 +67,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetFilesOfCommitResponse }
+     * 
+     */
+    public GetFilesOfCommitResponse createGetFilesOfCommitResponse() {
+        return new GetFilesOfCommitResponse();
+    }
+
+    /**
      * Create an instance of {@link GetFilesOfCommit }
      * 
      */
@@ -83,27 +83,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
+     * Create an instance of {@link GetLatestRevisionResponse }
      * 
      */
-    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
-        return new GetFilesBetweenTwoCommitsResponse();
+    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
+        return new GetLatestRevisionResponse();
     }
 
     /**
-     * Create an instance of {@link GetLatestRevision }
+     * Create an instance of {@link EchoResponse }
      * 
      */
-    public GetLatestRevision createGetLatestRevision() {
-        return new GetLatestRevision();
-    }
-
-    /**
-     * Create an instance of {@link GetFilesOfCommitResponse }
-     * 
-     */
-    public GetFilesOfCommitResponse createGetFilesOfCommitResponse() {
-        return new GetFilesOfCommitResponse();
+    public EchoResponse createEchoResponse() {
+        return new EchoResponse();
     }
 
     /**
@@ -115,11 +107,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetLatestRevisionResponse }
+     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
      * 
      */
-    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
-        return new GetLatestRevisionResponse();
+    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
+        return new GetFilesBetweenTwoCommitsResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllRevisionsResponse }
+     * 
+     */
+    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
+        return new GetAllRevisionsResponse();
     }
 
     /**

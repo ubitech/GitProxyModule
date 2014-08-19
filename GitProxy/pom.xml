@@ -67,15 +67,21 @@
                 </configuration>
             </plugin>
             <!-- Jar plugin  -->
+            <!-- To run from commandline 
+            java -jar /home/eleni/IdeaProjects/GitProxyModule/GitProxy/target/GitProxy-jar-with-dependencies.jar-->
             <plugin> 
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId> 
                 <version>2.4</version>
                 <configuration>	                
                     <archive>                         
-                        <addMavenDescriptor>false</addMavenDescriptor>                     
+                        <addMavenDescriptor>false</addMavenDescriptor>  
+                        <!--manifestEntries>
+                            <Class-Path>org.eclipse.jgit</Class-Path>
+                        </manifestEntries-->                   
                         <manifest>
                             <mainClass>eu.ubitech.ubicropper.gitproxy.controller.GitProxyController</mainClass>
+                            <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>                 
                 </configuration> 

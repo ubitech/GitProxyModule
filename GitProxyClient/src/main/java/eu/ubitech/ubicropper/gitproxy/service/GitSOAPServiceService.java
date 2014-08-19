@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "GitSOAPServiceService", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", wsdlLocation = "file:/home/pgouvas/workspace/GitProxyModule/GitProxyClient/src/wsdl/GitProxy.wsdl")
+@WebServiceClient(name = "GitSOAPServiceService", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", wsdlLocation = "file:/home/eleni/IdeaProjects/GitProxyModule/GitProxyClient/src/wsdl/GitProxy.wsdl")
 public class GitSOAPServiceService
     extends Service
 {
@@ -30,9 +30,9 @@ public class GitSOAPServiceService
         try {
             URL baseUrl;
             baseUrl = eu.ubitech.ubicropper.gitproxy.service.GitSOAPServiceService.class.getResource(".");
-            url = new URL(baseUrl, "file:/home/pgouvas/workspace/GitProxyModule/GitProxyClient/src/wsdl/GitProxy.wsdl");
+            url = new URL(baseUrl, "file:/home/eleni/IdeaProjects/GitProxyModule/GitProxyClient/src/wsdl/GitProxy.wsdl");
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'file:/home/pgouvas/workspace/GitProxyModule/GitProxyClient/src/wsdl/GitProxy.wsdl', retrying as a local file");
+            logger.warning("Failed to create URL for the wsdl Location: 'file:/home/eleni/IdeaProjects/GitProxyModule/GitProxyClient/src/wsdl/GitProxy.wsdl', retrying as a local file");
             logger.warning(e.getMessage());
         }
         GITSOAPSERVICESERVICE_WSDL_LOCATION = url;

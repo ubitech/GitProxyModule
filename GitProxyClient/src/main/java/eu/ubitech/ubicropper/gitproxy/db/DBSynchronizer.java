@@ -14,6 +14,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
@@ -79,7 +82,7 @@ public class DBSynchronizer {
     private int checkFilenameExists(String path, String filename) {
         int ret = -1;
         try {
-            String query = "SELECT idsif,path,filename FROM sif where path=? and filename=? and deleted=?";
+            String query = "SELECT idsif,path,filename FROM sif where path=? and filename=? and missing=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, path);
             preparedStatement.setString(2, filename);
@@ -100,7 +103,7 @@ public class DBSynchronizer {
         try {
             connection.setAutoCommit(false);
             
-            String query = "SELECT path,filename FROM sif where deleted=? ";
+            String query = "SELECT path,filename FROM sif where missing=? ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setBoolean(1, false);
             ResultSet rs = preparedStatement.executeQuery();
@@ -119,7 +122,8 @@ public class DBSynchronizer {
                         if (refid!=-1){ // i have found it so update
                             updateParent(path, filename, refid);
                         } else { // i have not found it so i have to create it
-                            refid = insertItem(exppath, expfilename, commitid, false, true, false);
+                            boolean isfolder = !expfilename.contains(".");
+                            refid = insertItem(exppath, expfilename, commitid, false, false, isfolder);
                             updateParent(path, filename, refid);
                         }
                     }//if
@@ -154,11 +158,11 @@ public class DBSynchronizer {
     /*
      * Adds an Item
      */
-    public int insertItem(String path, String filename, String commitid, boolean deleted, boolean inuse, boolean isfile) {
+    public int insertItem(String path, String filename, String commitid, boolean missing, boolean inuse, boolean isfolder) {
         int ret=-1;
         try {
             String query = "Insert into sif "
-                    + " (path, filename, creationDate, commitid, commitdate, checksum,deleted,inuse,type,idprovincia) "
+                    + " (path, filename, creationDate, commitid, commitdate, checksum,missing,inuse,type,idprovincia) "
                     + " values (?,?,?,?,?,?,?,?,?,?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
             //get Date
@@ -171,9 +175,9 @@ public class DBSynchronizer {
             preparedStatement.setString(4, commitid);
             preparedStatement.setTimestamp(5, timestamp);
             preparedStatement.setString(6, "check");
-            preparedStatement.setBoolean(7, deleted);
+            preparedStatement.setBoolean(7, missing);
             preparedStatement.setBoolean(8, inuse);
-            preparedStatement.setBoolean(9, isfile);
+            preparedStatement.setBoolean(9, isfolder);
             preparedStatement.setInt(10, Configuration.provinceid);
             preparedStatement.executeUpdate();
             //get inserted id
@@ -194,7 +198,7 @@ public class DBSynchronizer {
      */
     public void deleteItem(String path, String filename, String commitid) {
         try {
-            String query = "update sif set commitid=?,deleted=?,inuse=?,commitdate=? where path=? and filename=?";
+            String query = "update sif set commitid=?,missing=?,commitdate=? where path=? and filename=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             //get Date
             Date date = new Date();
@@ -202,10 +206,10 @@ public class DBSynchronizer {
             //
             preparedStatement.setString(1, commitid);
             preparedStatement.setBoolean(2, true);
-            preparedStatement.setBoolean(3, false);
-            preparedStatement.setTimestamp(4, timestamp);
-            preparedStatement.setString(5, path);
-            preparedStatement.setString(6, filename);
+            //preparedStatement.setBoolean(3, false);
+            preparedStatement.setTimestamp(3, timestamp);
+            preparedStatement.setString(4, path);
+            preparedStatement.setString(5, filename);
             preparedStatement.executeUpdate();
 
         } 
@@ -257,15 +261,15 @@ public class DBSynchronizer {
         try {
             connection.setAutoCommit(false);
             for (String str : list) {
-                boolean isfile = str.contains(".");
+                boolean isfolder = !str.contains(".");
                 int index = str.lastIndexOf(Configuration.remoteseparator);
                 String file1, file2 = "";
                 if (index != -1) {
                     file1 = str.substring(0, index);
                     file2 = str.substring(index + 1, str.length());
-                    System.out.println("SQL insert: " + file1 + " " + file2 + " " + isfile);
+                    System.out.println("SQL insert: " + file1 + " " + file2 + " " + isfolder);
                     //Transactionally Insert
-                    insertItem(file1, file2, commit, false, true, isfile);
+                    insertItem(file1, file2, commit, false, false, isfolder);
                 }//if
             }//for
             connection.commit();
@@ -321,7 +325,8 @@ public class DBSynchronizer {
                         }
                         //Invoke insert
                         System.out.println("insertItem: "+file1+" "+file2+" "+commit);
-                        insertItem(file1, file2, commit, false, true, true);
+                        boolean isfolder = !file2.contains(".");
+                        insertItem(file1, file2, commit, false, false, isfolder);
                         //TODO invoke Normalization at the end
                     } break;                        
                         
@@ -346,15 +351,20 @@ public class DBSynchronizer {
     
     
     //initial Sync
-    public void SynchronizeDatabase() {
+    public  Map SynchronizeDatabase() {
+           Map logMap = new HashMap<>();
         try {
             //get latest Commit If Existing  
             String latestlocalcommit = getLatestLocalCommit();
+            
             System.out.println("getLatestLocalCommit: " + latestlocalcommit);
+            logMap.put("LatestLocalCommit", "LatestLocalCommit:  "+latestlocalcommit +"<br/>");
+            
             if (latestlocalcommit == null) { //if null get remote latest commit
                 String remotecommitid = getLatestRemoteCommit();
                 if (remotecommitid != null) { //if such a remote commit exists fetch it with contents
                     System.out.println("Insert for the first time: " + remotecommitid);
+                    logMap.put("Insert for the first time: " ," Insert for the first time: "+ remotecommitid+"<br/>");
                     ArrayList remotefiles = getFilesOfLatestCommit();
                     //batch SQL insert
                     insertRemoteFilesToLocalDB(remotecommitid, remotefiles);
@@ -363,10 +373,14 @@ public class DBSynchronizer {
                 }
             } else { //latest local commit exist                
                 System.out.println("Fetching latest Remote Commit");
+                logMap.put("Remote Commit"," Fetching latest Remote Commit <br/>");
+                 
                 String remoteid = DBSynchronizer.getLatestRemoteCommit();
                 //only if commits differ
                 if (!remoteid.equalsIgnoreCase(latestlocalcommit)){
                     System.out.println("getLatestRemoteCommit:" + remoteid);
+                    logMap.put("getLatestRemoteCommit:" , " getLatestRemoteCommit: "+remoteid+"<br/>");
+                    
                     ArrayList<String> diffs = getFilesBetweenTwoCommits(latestlocalcommit, remoteid);
 //                    for (String dif : diffs) {
 //                        System.out.println("dif:" + dif);
@@ -380,7 +394,10 @@ public class DBSynchronizer {
             }//elseif
         } catch (Exception ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
+            logMap.put("SEVER Exception" ,DBSynchronizer.class.getName()+ " SEVERE " + ex+"<br/>");
+            return logMap;
         }
+        return logMap;
     }//EoM
 
     
