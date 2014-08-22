@@ -1,12 +1,11 @@
 package eu.ubitech.ubicropper.gitproxy.git;
 
-import eu.ubitech.ubicropper.gitproxy.config.Configuration;
+
 import eu.ubitech.ubicropper.gitproxy.logger.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.jgit.api.Git;
@@ -22,12 +21,17 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class GitService implements Runnable {
 
     private final static Logger LOGGER = LoggerFactory.getLogger();
-    private final String gitdir = Configuration.ScannedFolder;
-    private final String gitfile = gitdir + File.separatorChar + ".git";
+    private String gitdir = ""; //Configuration.ScannedFolder;
+    private String gitfile = "";
     private boolean isalive = true;
     private Git git;
 
-    GitService() {
+    private int timeout = 10000;
+            //Configuration.timeout = 10000; //TODO ELENIIIII sto server.properties
+    
+    public GitService(String gitdir) {
+        this.gitdir = gitdir;
+        gitfile = gitdir + File.separatorChar + ".git";
         try {
             Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
             //if git is not initialized - do it
@@ -46,7 +50,7 @@ public class GitService implements Runnable {
     public void run() {
         while (isalive) {
             try {
-                LOGGER.info("Thread Working.............");
+                LOGGER.info("Thread for "+gitdir+" Working.............");
                 if (!new File(gitfile).exists()) {
                     LOGGER.info("Git is not initialized. I will perform initialization");
                     GitUtil.createGitRepo(gitdir);
@@ -78,9 +82,10 @@ public class GitService implements Runnable {
                  } else {
                  LOGGER.info("Nothing to Commit yet");
                  }
-           
+                
+                 
                 //Default Threading Policy
-                Thread.sleep(Configuration.timeout);
+                Thread.sleep(timeout);
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(GitService.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,32 +117,6 @@ public class GitService implements Runnable {
 
     public ArrayList<String> getFilesBetweenTwoCommits(String revision1, String revision2) {
         return GitUtil.getFilesBetweenTwoCommits(git, revision1, revision2);
-    }//EoM    
+    }//EoM     
 
-    /*
-    public void addAndCommitFilesByDocroot(String docroot) {
-        //return GitUtil.getFilesBetweenTwoCommits(git, revision1, revision2);
-        try {
-            
-            StatusCommand status = git.status();
-            org.eclipse.jgit.api.Status ret = status.call();
-            // condition to add and Commit /
-            if (!ret.getUntracked().isEmpty() || //new File Added
-                !ret.getMissing().isEmpty() || //File Deleted
-                !ret.getModified().isEmpty() //File Modified
-                    ) {
-                LOGGER.info("Performing Add and Commit");
-                if(docroot){
-                    GitUtil.addAndCommit(git, (new Date()).toString(), ".");
-                    //---------Test
-                }
-                
-
-            }
-
-        } catch (GitAPIException ex) {
-            Logger.getLogger(GitService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//EoM  
-*/
 }//EoC

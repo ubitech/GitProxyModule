@@ -37,11 +37,14 @@ public class DBSynchronizer {
     /*
      * Fetch newest commit first
      */
-    private String getLatestLocalCommit() {
+    private String getLatestLocalCommit(String provinceid) {
         String ret = null;
         try {
-            String query = "SELECT  commitid FROM sif ORDER BY commitdate desc LIMIT 1;";
+            String query = "SELECT  commitid FROM sif WHERE idprovincia=? ORDER BY commitdate desc LIMIT 1;";
+            
+            System.out.println("query"+query +" ----- "+ provinceid);
             PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, provinceid);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 ret = rs.getString("commitid");
@@ -86,7 +89,7 @@ public class DBSynchronizer {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, path);
             preparedStatement.setString(2, filename);
-            preparedStatement.setBoolean(3, false);            
+            preparedStatement.setBoolean(3, false);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 ret = rs.getInt("idsif");
@@ -98,28 +101,27 @@ public class DBSynchronizer {
         return ret;
     }//EoM      
 
-    
-    private void batchNormalizeParents(String commitid){
+    private void batchNormalizeParents(String commitid) {
         try {
             connection.setAutoCommit(false);
-            
+
             String query = "SELECT path,filename FROM sif where missing=? ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setBoolean(1, false);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String path = rs.getString("path");
-                String filename =  rs.getString("filename");
+                String filename = rs.getString("filename");
                 //process path to get expected path and filename
                 //only if separator exists e.g. BuenosAires/SIF
-                if (path.contains(Configuration.remoteseparator)){
+                if (path.contains(Configuration.remoteseparator)) {
                     int index = path.lastIndexOf(Configuration.remoteseparator);
                     String exppath, expfilename = "";
                     if (index != -1) {
                         exppath = path.substring(0, index);
                         expfilename = path.substring(index + 1, path.length());
                         int refid = checkFilenameExists(exppath, expfilename);
-                        if (refid!=-1){ // i have found it so update
+                        if (refid != -1) { // i have found it so update
                             updateParent(path, filename, refid);
                         } else { // i have not found it so i have to create it
                             boolean isfolder = !expfilename.contains(".");
@@ -129,13 +131,13 @@ public class DBSynchronizer {
                     }//if
                 }//if
             }//while           
-            
+
             connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
-        }      
+        }
     }//EoM
-    
+
     /*
      * Updates an Item
      */
@@ -149,22 +151,21 @@ public class DBSynchronizer {
             preparedStatement.setString(3, filename);
             preparedStatement.executeUpdate();
 
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//EoM updateParent    
-    
+
     /*
      * Adds an Item
      */
     public int insertItem(String path, String filename, String commitid, boolean missing, boolean inuse, boolean isfolder) {
-        int ret=-1;
+        int ret = -1;
         try {
             String query = "Insert into sif "
                     + " (path, filename, creationDate, commitid, commitdate, checksum,missing,inuse,type,idprovincia) "
                     + " values (?,?,?,?,?,?,?,?,?,?) ";
-            PreparedStatement preparedStatement = connection.prepareStatement(query , Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             //get Date
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
@@ -182,7 +183,7 @@ public class DBSynchronizer {
             preparedStatement.executeUpdate();
             //get inserted id
             ResultSet rs = preparedStatement.getGeneratedKeys();
-            if(rs.next()) {
+            if (rs.next()) {
                 ret = rs.getInt(1);
             }
 
@@ -192,7 +193,7 @@ public class DBSynchronizer {
         }
         return ret;
     }//EoM insertItem
-    
+
     /*
      * Deletes an Item
      */
@@ -212,19 +213,18 @@ public class DBSynchronizer {
             preparedStatement.setString(5, filename);
             preparedStatement.executeUpdate();
 
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//EoM deletetItem
-    
+
     public void insertRemoteFilesToLocalDB(String remotecommitid, ArrayList<String> remotefiles) {
         ArrayList<String> tobeinserted = new ArrayList();
         try {
             for (String file : remotefiles) {
                 System.out.println("file: " + file);
                 //only files that match docroot will be processed
-                if (file.startsWith(Configuration.docroot)) {
+                //if (file.startsWith(Configuration.docroot)) {
                     String[] args = file.split(Configuration.remoteseparator);
                     if (args.length > 1) { //ignore if only root
                         int index = 0;
@@ -242,7 +242,7 @@ public class DBSynchronizer {
                             index++;
                         }//for                                            
                     }
-                }//if
+                //}//if
             }//for
 
             for (String object : tobeinserted) {
@@ -251,7 +251,7 @@ public class DBSynchronizer {
             //Invoke batch insert
             batchInsert(tobeinserted, remotecommitid);
             //TODO add dependency checking / normalization
-            
+
         } catch (Exception ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -290,9 +290,9 @@ public class DBSynchronizer {
     }//EoM
 
     /*
-    *   DELETE_BuenosAires/SIF/IDLIBRO3/test8.jpg.txt_/dev/null
-    *   ADD_/dev/null_BuenosAires/SIF/IDLIBRO3/test10.jpg.txt
-    */
+     *   DELETE_BuenosAires/SIF/IDLIBRO3/test8.jpg.txt_/dev/null
+     *   ADD_/dev/null_BuenosAires/SIF/IDLIBRO3/test10.jpg.txt
+     */
     private void batchUpdate(ArrayList<String> diflist, String commit) {
         try {
             connection.setAutoCommit(false);
@@ -301,35 +301,37 @@ public class DBSynchronizer {
                 String operation = args[0];
                 String operand1 = args[1];
                 String operand2 = args[2];
-                System.out.println("operation: "+operation+" operand1: "+operand1+" operand2: "+operand2);
-                switch (operation){
-                    case "DELETE":{
+                System.out.println("operation: " + operation + " operand1: " + operand1 + " operand2: " + operand2);
+                switch (operation) {
+                    case "DELETE": {
                         //operand1=BuenosAires/SIF/IDLIBRO3/test8.jpg.txt
                         int index = operand1.lastIndexOf(Configuration.remoteseparator);
-                        String file1="", file2 = "";
+                        String file1 = "", file2 = "";
                         if (index != -1) {
                             file1 = operand1.substring(0, index);
                             file2 = operand1.substring(index + 1, operand1.length());
                         }
                         //Invoke delete
-                        System.out.println("deleteItem: "+file1+" "+file2+" "+commit);
+                        System.out.println("deleteItem: " + file1 + " " + file2 + " " + commit);
                         deleteItem(file1, file2, commit);
-                    } break;                        
-                    case "ADD":{
+                    }
+                    break;
+                    case "ADD": {
                         //operand2=BuenosAires/SIF/IDLIBRO3/test10.jpg.txt
                         int index = operand2.lastIndexOf(Configuration.remoteseparator);
-                        String file1="", file2 = "";
+                        String file1 = "", file2 = "";
                         if (index != -1) {
                             file1 = operand2.substring(0, index);
                             file2 = operand2.substring(index + 1, operand2.length());
                         }
                         //Invoke insert
-                        System.out.println("insertItem: "+file1+" "+file2+" "+commit);
+                        System.out.println("insertItem: " + file1 + " " + file2 + " " + commit);
                         boolean isfolder = !file2.contains(".");
                         insertItem(file1, file2, commit, false, false, isfolder);
                         //TODO invoke Normalization at the end
-                    } break;                        
-                        
+                    }
+                    break;
+
                 } //switch
             }//for
             connection.commit();
@@ -348,24 +350,27 @@ public class DBSynchronizer {
             }
         }//finally
     }//EoM    
-    
-    
+
     //initial Sync
-    public  Map SynchronizeDatabase() {
-           Map logMap = new HashMap<>();
+    public Map SynchronizeDatabase(String provinceid) {
+        Map logMap = new HashMap<>();
         try {
             //get latest Commit If Existing  
-            String latestlocalcommit = getLatestLocalCommit();
-            
+            String latestlocalcommit = getLatestLocalCommit(provinceid);
+
             System.out.println("getLatestLocalCommit: " + latestlocalcommit);
-            logMap.put("LatestLocalCommit", "LatestLocalCommit:  "+latestlocalcommit +"<br/>");
+            logMap.put("LatestLocalCommit", "LatestLocalCommit:  " + latestlocalcommit + "<br/>");
+
+            // add & commit only files start with docroot
+            //TODO
+            
             
             if (latestlocalcommit == null) { //if null get remote latest commit
-                String remotecommitid = getLatestRemoteCommit();
+                String remotecommitid = getLatestRemoteCommit(provinceid);
                 if (remotecommitid != null) { //if such a remote commit exists fetch it with contents
                     System.out.println("Insert for the first time: " + remotecommitid);
-                    logMap.put("Insert for the first time: " ," Insert for the first time: "+ remotecommitid+"<br/>");
-                    ArrayList remotefiles = getFilesOfLatestCommit();
+                    logMap.put("Insert for the first time: ", " Insert for the first time: " + remotecommitid + "<br/>");
+                    ArrayList remotefiles = getFilesOfLatestCommit(provinceid);
                     //batch SQL insert
                     insertRemoteFilesToLocalDB(remotecommitid, remotefiles);
                     //normalize
@@ -373,36 +378,34 @@ public class DBSynchronizer {
                 }
             } else { //latest local commit exist                
                 System.out.println("Fetching latest Remote Commit");
-                logMap.put("Remote Commit"," Fetching latest Remote Commit <br/>");
-                 
-                String remoteid = DBSynchronizer.getLatestRemoteCommit();
+                logMap.put("Remote Commit", " Fetching latest Remote Commit <br/>");
+
+                String remoteid = DBSynchronizer.getLatestRemoteCommit(provinceid);
                 //only if commits differ
-                if (!remoteid.equalsIgnoreCase(latestlocalcommit)){
+                if (!remoteid.equalsIgnoreCase(latestlocalcommit)) {
                     System.out.println("getLatestRemoteCommit:" + remoteid);
-                    logMap.put("getLatestRemoteCommit:" , " getLatestRemoteCommit: "+remoteid+"<br/>");
-                    
-                    ArrayList<String> diffs = getFilesBetweenTwoCommits(latestlocalcommit, remoteid);
+                    logMap.put("getLatestRemoteCommit:", " getLatestRemoteCommit: " + remoteid + "<br/>");
+
+                    ArrayList<String> diffs = getFilesBetweenTwoCommits(latestlocalcommit, remoteid,provinceid);
 //                    for (String dif : diffs) {
 //                        System.out.println("dif:" + dif);
 //                        String[] ops = dif.split("_");
 //                    }//for
                     //batch SQL insert
-                    batchUpdate(diffs,remoteid);
+                    batchUpdate(diffs, remoteid);
                     //normalize
                     batchNormalizeParents(remoteid);
                 }
             }//elseif
         } catch (Exception ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
-            logMap.put("SEVER Exception" ,DBSynchronizer.class.getName()+ " SEVERE " + ex+"<br/>");
+            logMap.put("SEVER Exception", DBSynchronizer.class.getName() + " SEVERE " + ex + "<br/>");
             return logMap;
         }
         return logMap;
     }//EoM
 
-    
-    
-    public static String getLatestRemoteCommit() {
+    public static String getLatestRemoteCommit(String provinceid) {
         String ret = null;
         String endpoint = Configuration.wsendpoint;
         String wsdl = endpoint + "?wsdl";
@@ -410,10 +413,12 @@ public class DBSynchronizer {
         try {
             service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
             GitSOAPService port = service.getGitSOAPServicePort();
+            System.out.println("port"+ port.toString());
             BindingProvider bp = (BindingProvider) port;
             bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
             //1 - get latest revision
-            ret = port.getLatestRevision(Configuration.wstoken);
+            System.out.println(Configuration.wstoken+"--"+provinceid);
+            ret = port.getLatestRevision(Configuration.wstoken,provinceid);
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
@@ -421,7 +426,7 @@ public class DBSynchronizer {
         return ret;
     }//EoM    
 
-    public static ArrayList<String> getFilesOfLatestCommit() {
+    public static ArrayList<String> getFilesOfLatestCommit(String provinceid) {
         ArrayList<String> ret = new ArrayList();
         String endpoint = Configuration.wsendpoint;
         String wsdl = endpoint + "?wsdl";
@@ -432,10 +437,10 @@ public class DBSynchronizer {
             BindingProvider bp = (BindingProvider) port;
             bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
             //1 - get latest revision
-            String latest = port.getLatestRevision(Configuration.wstoken);
+            String latest = port.getLatestRevision(Configuration.wstoken,provinceid);
             System.out.println("latest:" + latest);
             //2 - get Files of 
-            ret = (ArrayList<String>) port.getFilesOfCommit(Configuration.wstoken, latest);
+            ret = (ArrayList<String>) port.getFilesOfCommit(Configuration.wstoken, latest,provinceid);
             for (String file : ret) {
                 System.out.println("file:" + file);
             }
@@ -446,7 +451,7 @@ public class DBSynchronizer {
         return ret;
     }//EoM
 
-    public static ArrayList<String> getFilesBetweenTwoCommits(String oldcommit, String newcommit) {
+    public static ArrayList<String> getFilesBetweenTwoCommits(String oldcommit, String newcommit,String provinceid) {
         ArrayList<String> ret = new ArrayList();
         String endpoint = Configuration.wsendpoint;
         String wsdl = endpoint + "?wsdl";
@@ -457,7 +462,7 @@ public class DBSynchronizer {
             BindingProvider bp = (BindingProvider) port;
             bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
             //1 - Web-Service Invocation 
-            ret = (ArrayList<String>) port.getFilesBetweenTwoCommits(Configuration.wstoken, oldcommit, newcommit);
+            ret = (ArrayList<String>) port.getFilesBetweenTwoCommits(Configuration.wstoken, oldcommit, newcommit,provinceid);
             for (String file : ret) {
                 System.out.println("diff-file:" + file);
             }

@@ -20,10 +20,10 @@ public class Tester {
     
     public static void main(String[] args) {
        Tester tester = new Tester();
-       tester.invoke();
+       tester.invoke("1");
     }//EoM
     
-    public void invoke(){
+    public void invoke(String provinceid){
         String endpoint = "http://127.0.0.1:9090/SoapContext/SoapPort";
         String wsdl = endpoint+"?wsdl";
         GitSOAPServiceService service;
@@ -35,13 +35,13 @@ public class Tester {
             //1
             System.out.println("echo:"+port.echo("test") );
             //2
-            ArrayList revisions = (ArrayList) port.getAllRevisions("token");
+            ArrayList revisions = (ArrayList) port.getAllRevisions("token",provinceid);
             System.out.println("size(): "+revisions.size());
             //3
-            String latest = port.getLatestRevision("Argentina");
+            String latest = port.getLatestRevision("Argentina",provinceid);
             System.out.println("latest:" +latest);
             //4
-            ArrayList<String> ret = (ArrayList<String>) port.getFilesOfCommit("test", latest);
+            ArrayList<String> ret = (ArrayList<String>) port.getFilesOfCommit("test", latest,provinceid);
             for (String file : ret) {
                 System.out.println("file:"+file);
             }

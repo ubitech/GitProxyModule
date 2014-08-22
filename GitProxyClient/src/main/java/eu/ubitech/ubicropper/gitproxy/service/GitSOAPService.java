@@ -26,6 +26,7 @@ public interface GitSOAPService {
 
     /**
      * 
+     * @param arg2
      * @param arg1
      * @param arg0
      * @return
@@ -39,10 +40,13 @@ public interface GitSOAPService {
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
-        String arg1);
+        String arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2);
 
     /**
      * 
+     * @param arg3
      * @param arg2
      * @param arg1
      * @param arg0
@@ -59,7 +63,9 @@ public interface GitSOAPService {
         @WebParam(name = "arg1", targetNamespace = "")
         String arg1,
         @WebParam(name = "arg2", targetNamespace = "")
-        String arg2);
+        String arg2,
+        @WebParam(name = "arg3", targetNamespace = "")
+        String arg3);
 
     /**
      * 
@@ -77,6 +83,7 @@ public interface GitSOAPService {
 
     /**
      * 
+     * @param arg1
      * @param arg0
      * @return
      *     returns java.util.List<java.lang.String>
@@ -87,10 +94,13 @@ public interface GitSOAPService {
     @ResponseWrapper(localName = "getAllRevisionsResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetAllRevisionsResponse")
     public List<String> getAllRevisions(
         @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
 
     /**
      * 
+     * @param arg1
      * @param arg0
      * @return
      *     returns java.lang.String
@@ -101,6 +111,8 @@ public interface GitSOAPService {
     @ResponseWrapper(localName = "getLatestRevisionResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetLatestRevisionResponse")
     public String getLatestRevision(
         @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
 
 }

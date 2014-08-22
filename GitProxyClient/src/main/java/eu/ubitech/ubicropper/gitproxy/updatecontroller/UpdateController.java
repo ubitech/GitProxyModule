@@ -21,19 +21,19 @@ public class UpdateController {
     private final Properties prop = new Properties();
     private InputStream input = null;
     
-    public Map  sincronize(String dbport,String dbip,String username ,String password ,String dbname,String wsendpoint,String wstoken,String docroot, String remoteseparator ,String provinceid){
+    public Map  synchronize(String dbport,String dbip,String username ,String password ,String dbname,String wsendpoint,String wstoken,String docroot, String remoteseparator ,String provinceid){
         UpdateController updatecontroller = new UpdateController();
         updatecontroller.readProperties(dbport,dbip, username , password , dbname, wsendpoint, wstoken, docroot,  remoteseparator , provinceid);
         DBSynchronizer dbsynchronizer  = new DBSynchronizer();
-        Map logMap = dbsynchronizer.SynchronizeDatabase();
+        Map logMap = dbsynchronizer.SynchronizeDatabase(provinceid);
         return logMap;
     }
     
-     public  Map sincronize(){
+     public  Map synchronize(){
         UpdateController updatecontroller = new UpdateController();
         updatecontroller.readProperties();
         DBSynchronizer dbsynchronizer  = new DBSynchronizer();
-        Map logMap = dbsynchronizer.SynchronizeDatabase();
+        Map logMap = dbsynchronizer.SynchronizeDatabase("1");
         return logMap;
     }
      
@@ -41,7 +41,7 @@ public class UpdateController {
         UpdateController updatecontroller = new UpdateController();
         updatecontroller.readProperties();
         DBSynchronizer dbsynchronizer  = new DBSynchronizer();
-        dbsynchronizer.SynchronizeDatabase();
+        dbsynchronizer.SynchronizeDatabase("3");
         //TODO create Thread updater
         //TODO handle delete Folders
         //TODO handle addition of nested folder
@@ -56,11 +56,8 @@ public class UpdateController {
     private void readProperties() {
         try {
             String path = new java.io.File(".").getCanonicalPath();
-            LOGGER.log(Level.INFO, "PATH:{0}", path);
-            //input = new FileInputStream("client.properties");
-            
+            LOGGER.log(Level.INFO, "PATH:{0}", path); 
             input =  this.getClass().getResourceAsStream("/client.properties");
-            
             
             // load a properties file
             prop.load(input);
@@ -75,9 +72,7 @@ public class UpdateController {
             Configuration.docroot     =   prop.getProperty("docroot").trim();
             Configuration.remoteseparator     =   prop.getProperty("remoteseparator").trim();            
             Configuration.provinceid = Integer.parseInt( prop.getProperty("provinceid").trim() );
-            
-           
-            
+
         } catch (IOException ex) {
             LOGGER.severe(ex.getMessage());
         } finally {

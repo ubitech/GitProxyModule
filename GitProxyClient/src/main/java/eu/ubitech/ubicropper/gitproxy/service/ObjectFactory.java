@@ -43,19 +43,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetLatestRevision }
-     * 
-     */
-    public GetLatestRevision createGetLatestRevision() {
-        return new GetLatestRevision();
-    }
-
-    /**
      * Create an instance of {@link Echo }
      * 
      */
     public Echo createEcho() {
         return new Echo();
+    }
+
+    /**
+     * Create an instance of {@link GetLatestRevisionResponse }
+     * 
+     */
+    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
+        return new GetLatestRevisionResponse();
     }
 
     /**
@@ -67,6 +67,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
+     * 
+     */
+    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
+        return new GetFilesBetweenTwoCommitsResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllRevisionsResponse }
+     * 
+     */
+    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
+        return new GetAllRevisionsResponse();
+    }
+
+    /**
      * Create an instance of {@link GetFilesOfCommitResponse }
      * 
      */
@@ -75,19 +91,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetFilesOfCommit }
+     * Create an instance of {@link GetLatestRevision }
      * 
      */
-    public GetFilesOfCommit createGetFilesOfCommit() {
-        return new GetFilesOfCommit();
-    }
-
-    /**
-     * Create an instance of {@link GetLatestRevisionResponse }
-     * 
-     */
-    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
-        return new GetLatestRevisionResponse();
+    public GetLatestRevision createGetLatestRevision() {
+        return new GetLatestRevision();
     }
 
     /**
@@ -107,19 +115,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
+     * Create an instance of {@link GetFilesOfCommit }
      * 
      */
-    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
-        return new GetFilesBetweenTwoCommitsResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetAllRevisionsResponse }
-     * 
-     */
-    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
-        return new GetAllRevisionsResponse();
+    public GetFilesOfCommit createGetFilesOfCommit() {
+        return new GetFilesOfCommit();
     }
 
     /**
