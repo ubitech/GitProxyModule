@@ -26,68 +26,30 @@ public class ObjectFactory {
 
     private final static QName _GetAllRevisionsResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getAllRevisionsResponse");
     private final static QName _GetLatestRevisionResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getLatestRevisionResponse");
-    private final static QName _GetFilesBetweenTwoCommitsResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesBetweenTwoCommitsResponse");
     private final static QName _GetLatestRevision_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getLatestRevision");
-    private final static QName _GetFilesOfCommit_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommit");
-    private final static QName _Echo_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echo");
+    private final static QName _SaveImageToCERIFBook_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "saveImageToCERIFBook");
     private final static QName _EchoResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echoResponse");
+    private final static QName _GetImage_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getImage");
+    private final static QName _SaveImageToCERIFBookResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "saveImageToCERIFBookResponse");
+    private final static QName _ManageTmpFolder_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "manageTmpFolder");
     private final static QName _GetFilesBetweenTwoCommits_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesBetweenTwoCommits");
     private final static QName _GetAllRevisions_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getAllRevisions");
+    private final static QName _DeleteImageResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "deleteImageResponse");
+    private final static QName _GetFilesBetweenTwoCommitsResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesBetweenTwoCommitsResponse");
+    private final static QName _GetFilesOfCommit_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommit");
+    private final static QName _GetImageResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getImageResponse");
+    private final static QName _DeleteImage_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "deleteImage");
+    private final static QName _Echo_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echo");
+    private final static QName _ManageTmpFolderResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "manageTmpFolderResponse");
     private final static QName _GetFilesOfCommitResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommitResponse");
+    private final static QName _SaveImageToCERIFBookArg2_QNAME = new QName("", "arg2");
+    private final static QName _GetImageResponseReturn_QNAME = new QName("", "return");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: eu.ubitech.ubicropper.gitproxy.service
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link Echo }
-     * 
-     */
-    public Echo createEcho() {
-        return new Echo();
-    }
-
-    /**
-     * Create an instance of {@link GetLatestRevisionResponse }
-     * 
-     */
-    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
-        return new GetLatestRevisionResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetFilesBetweenTwoCommits }
-     * 
-     */
-    public GetFilesBetweenTwoCommits createGetFilesBetweenTwoCommits() {
-        return new GetFilesBetweenTwoCommits();
-    }
-
-    /**
-     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
-     * 
-     */
-    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
-        return new GetFilesBetweenTwoCommitsResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetAllRevisionsResponse }
-     * 
-     */
-    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
-        return new GetAllRevisionsResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetFilesOfCommitResponse }
-     * 
-     */
-    public GetFilesOfCommitResponse createGetFilesOfCommitResponse() {
-        return new GetFilesOfCommitResponse();
     }
 
     /**
@@ -99,11 +61,75 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EchoResponse }
+     * Create an instance of {@link SaveImageToCERIFBookResponse }
      * 
      */
-    public EchoResponse createEchoResponse() {
-        return new EchoResponse();
+    public SaveImageToCERIFBookResponse createSaveImageToCERIFBookResponse() {
+        return new SaveImageToCERIFBookResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteImageResponse }
+     * 
+     */
+    public DeleteImageResponse createDeleteImageResponse() {
+        return new DeleteImageResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetImage }
+     * 
+     */
+    public GetImage createGetImage() {
+        return new GetImage();
+    }
+
+    /**
+     * Create an instance of {@link GetLatestRevisionResponse }
+     * 
+     */
+    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
+        return new GetLatestRevisionResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetFilesOfCommitResponse }
+     * 
+     */
+    public GetFilesOfCommitResponse createGetFilesOfCommitResponse() {
+        return new GetFilesOfCommitResponse();
+    }
+
+    /**
+     * Create an instance of {@link Echo }
+     * 
+     */
+    public Echo createEcho() {
+        return new Echo();
+    }
+
+    /**
+     * Create an instance of {@link ManageTmpFolderResponse }
+     * 
+     */
+    public ManageTmpFolderResponse createManageTmpFolderResponse() {
+        return new ManageTmpFolderResponse();
+    }
+
+    /**
+     * Create an instance of {@link ManageTmpFolder }
+     * 
+     */
+    public ManageTmpFolder createManageTmpFolder() {
+        return new ManageTmpFolder();
+    }
+
+    /**
+     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
+     * 
+     */
+    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
+        return new GetFilesBetweenTwoCommitsResponse();
     }
 
     /**
@@ -120,6 +146,54 @@ public class ObjectFactory {
      */
     public GetFilesOfCommit createGetFilesOfCommit() {
         return new GetFilesOfCommit();
+    }
+
+    /**
+     * Create an instance of {@link GetFilesBetweenTwoCommits }
+     * 
+     */
+    public GetFilesBetweenTwoCommits createGetFilesBetweenTwoCommits() {
+        return new GetFilesBetweenTwoCommits();
+    }
+
+    /**
+     * Create an instance of {@link SaveImageToCERIFBook }
+     * 
+     */
+    public SaveImageToCERIFBook createSaveImageToCERIFBook() {
+        return new SaveImageToCERIFBook();
+    }
+
+    /**
+     * Create an instance of {@link DeleteImage }
+     * 
+     */
+    public DeleteImage createDeleteImage() {
+        return new DeleteImage();
+    }
+
+    /**
+     * Create an instance of {@link GetAllRevisionsResponse }
+     * 
+     */
+    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
+        return new GetAllRevisionsResponse();
+    }
+
+    /**
+     * Create an instance of {@link EchoResponse }
+     * 
+     */
+    public EchoResponse createEchoResponse() {
+        return new EchoResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetImageResponse }
+     * 
+     */
+    public GetImageResponse createGetImageResponse() {
+        return new GetImageResponse();
     }
 
     /**
@@ -141,15 +215,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesBetweenTwoCommitsResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getFilesBetweenTwoCommitsResponse")
-    public JAXBElement<GetFilesBetweenTwoCommitsResponse> createGetFilesBetweenTwoCommitsResponse(GetFilesBetweenTwoCommitsResponse value) {
-        return new JAXBElement<GetFilesBetweenTwoCommitsResponse>(_GetFilesBetweenTwoCommitsResponse_QNAME, GetFilesBetweenTwoCommitsResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetLatestRevision }{@code >}}
      * 
      */
@@ -159,21 +224,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesOfCommit }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SaveImageToCERIFBook }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getFilesOfCommit")
-    public JAXBElement<GetFilesOfCommit> createGetFilesOfCommit(GetFilesOfCommit value) {
-        return new JAXBElement<GetFilesOfCommit>(_GetFilesOfCommit_QNAME, GetFilesOfCommit.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Echo }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "echo")
-    public JAXBElement<Echo> createEcho(Echo value) {
-        return new JAXBElement<Echo>(_Echo_QNAME, Echo.class, null, value);
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "saveImageToCERIFBook")
+    public JAXBElement<SaveImageToCERIFBook> createSaveImageToCERIFBook(SaveImageToCERIFBook value) {
+        return new JAXBElement<SaveImageToCERIFBook>(_SaveImageToCERIFBook_QNAME, SaveImageToCERIFBook.class, null, value);
     }
 
     /**
@@ -183,6 +239,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "echoResponse")
     public JAXBElement<EchoResponse> createEchoResponse(EchoResponse value) {
         return new JAXBElement<EchoResponse>(_EchoResponse_QNAME, EchoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetImage }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getImage")
+    public JAXBElement<GetImage> createGetImage(GetImage value) {
+        return new JAXBElement<GetImage>(_GetImage_QNAME, GetImage.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SaveImageToCERIFBookResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "saveImageToCERIFBookResponse")
+    public JAXBElement<SaveImageToCERIFBookResponse> createSaveImageToCERIFBookResponse(SaveImageToCERIFBookResponse value) {
+        return new JAXBElement<SaveImageToCERIFBookResponse>(_SaveImageToCERIFBookResponse_QNAME, SaveImageToCERIFBookResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ManageTmpFolder }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "manageTmpFolder")
+    public JAXBElement<ManageTmpFolder> createManageTmpFolder(ManageTmpFolder value) {
+        return new JAXBElement<ManageTmpFolder>(_ManageTmpFolder_QNAME, ManageTmpFolder.class, null, value);
     }
 
     /**
@@ -204,12 +287,93 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteImageResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "deleteImageResponse")
+    public JAXBElement<DeleteImageResponse> createDeleteImageResponse(DeleteImageResponse value) {
+        return new JAXBElement<DeleteImageResponse>(_DeleteImageResponse_QNAME, DeleteImageResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesBetweenTwoCommitsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getFilesBetweenTwoCommitsResponse")
+    public JAXBElement<GetFilesBetweenTwoCommitsResponse> createGetFilesBetweenTwoCommitsResponse(GetFilesBetweenTwoCommitsResponse value) {
+        return new JAXBElement<GetFilesBetweenTwoCommitsResponse>(_GetFilesBetweenTwoCommitsResponse_QNAME, GetFilesBetweenTwoCommitsResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesOfCommit }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getFilesOfCommit")
+    public JAXBElement<GetFilesOfCommit> createGetFilesOfCommit(GetFilesOfCommit value) {
+        return new JAXBElement<GetFilesOfCommit>(_GetFilesOfCommit_QNAME, GetFilesOfCommit.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetImageResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getImageResponse")
+    public JAXBElement<GetImageResponse> createGetImageResponse(GetImageResponse value) {
+        return new JAXBElement<GetImageResponse>(_GetImageResponse_QNAME, GetImageResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteImage }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "deleteImage")
+    public JAXBElement<DeleteImage> createDeleteImage(DeleteImage value) {
+        return new JAXBElement<DeleteImage>(_DeleteImage_QNAME, DeleteImage.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Echo }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "echo")
+    public JAXBElement<Echo> createEcho(Echo value) {
+        return new JAXBElement<Echo>(_Echo_QNAME, Echo.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ManageTmpFolderResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "manageTmpFolderResponse")
+    public JAXBElement<ManageTmpFolderResponse> createManageTmpFolderResponse(ManageTmpFolderResponse value) {
+        return new JAXBElement<ManageTmpFolderResponse>(_ManageTmpFolderResponse_QNAME, ManageTmpFolderResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesOfCommitResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getFilesOfCommitResponse")
     public JAXBElement<GetFilesOfCommitResponse> createGetFilesOfCommitResponse(GetFilesOfCommitResponse value) {
         return new JAXBElement<GetFilesOfCommitResponse>(_GetFilesOfCommitResponse_QNAME, GetFilesOfCommitResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link byte[]}{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "arg2", scope = SaveImageToCERIFBook.class)
+    public JAXBElement<byte[]> createSaveImageToCERIFBookArg2(byte[] value) {
+        return new JAXBElement<byte[]>(_SaveImageToCERIFBookArg2_QNAME, byte[].class, SaveImageToCERIFBook.class, ((byte[]) value));
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link byte[]}{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "return", scope = GetImageResponse.class)
+    public JAXBElement<byte[]> createGetImageResponseReturn(byte[] value) {
+        return new JAXBElement<byte[]>(_GetImageResponseReturn_QNAME, byte[].class, GetImageResponse.class, ((byte[]) value));
     }
 
 }

@@ -69,6 +69,80 @@ public interface GitSOAPService {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "manageTmpFolder", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.ManageTmpFolder")
+    @ResponseWrapper(localName = "manageTmpFolderResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.ManageTmpFolderResponse")
+    public boolean manageTmpFolder(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns byte[]
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getImage", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetImage")
+    @ResponseWrapper(localName = "getImageResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetImageResponse")
+    public byte[] getImage(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "saveImageToCERIFBook", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.SaveImageToCERIFBook")
+    @ResponseWrapper(localName = "saveImageToCERIFBookResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.SaveImageToCERIFBookResponse")
+    public boolean saveImageToCERIFBook(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        byte[] arg2,
+        @WebParam(name = "arg3", targetNamespace = "")
+        String arg3);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "deleteImage", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.DeleteImage")
+    @ResponseWrapper(localName = "deleteImageResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.DeleteImageResponse")
+    public boolean deleteImage(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns java.lang.String
