@@ -69,6 +69,21 @@ public interface GitSOAPService {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "echo", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.Echo")
+    @ResponseWrapper(localName = "echoResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.EchoResponse")
+    public String echo(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg2
      * @param arg1
      * @param arg0
      * @return
@@ -76,9 +91,28 @@ public interface GitSOAPService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "manageTmpFolder", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.ManageTmpFolder")
-    @ResponseWrapper(localName = "manageTmpFolderResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.ManageTmpFolderResponse")
-    public boolean manageTmpFolder(
+    @RequestWrapper(localName = "saveImage", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.SaveImage")
+    @ResponseWrapper(localName = "saveImageResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.SaveImageResponse")
+    public boolean saveImage(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        byte[] arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getAllRevisions", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetAllRevisions")
+    @ResponseWrapper(localName = "getAllRevisionsResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetAllRevisionsResponse")
+    public List<String> getAllRevisions(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
@@ -89,13 +123,13 @@ public interface GitSOAPService {
      * @param arg1
      * @param arg0
      * @return
-     *     returns byte[]
+     *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getImage", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetImage")
-    @ResponseWrapper(localName = "getImageResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetImageResponse")
-    public byte[] getImage(
+    @RequestWrapper(localName = "getLatestRevision", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetLatestRevision")
+    @ResponseWrapper(localName = "getLatestRevisionResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetLatestRevisionResponse")
+    public String getLatestRevision(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
@@ -143,30 +177,16 @@ public interface GitSOAPService {
 
     /**
      * 
-     * @param arg0
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "echo", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.Echo")
-    @ResponseWrapper(localName = "echoResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.EchoResponse")
-    public String echo(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
-
-    /**
-     * 
      * @param arg1
      * @param arg0
      * @return
-     *     returns java.util.List<java.lang.String>
+     *     returns boolean
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getAllRevisions", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetAllRevisions")
-    @ResponseWrapper(localName = "getAllRevisionsResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetAllRevisionsResponse")
-    public List<String> getAllRevisions(
+    @RequestWrapper(localName = "manageTmpFolder", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.ManageTmpFolder")
+    @ResponseWrapper(localName = "manageTmpFolderResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.ManageTmpFolderResponse")
+    public boolean manageTmpFolder(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
@@ -177,16 +197,39 @@ public interface GitSOAPService {
      * @param arg1
      * @param arg0
      * @return
-     *     returns java.lang.String
+     *     returns byte[]
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getLatestRevision", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetLatestRevision")
-    @ResponseWrapper(localName = "getLatestRevisionResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetLatestRevisionResponse")
-    public String getLatestRevision(
+    @RequestWrapper(localName = "getImage", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetImage")
+    @ResponseWrapper(localName = "getImageResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.GetImageResponse")
+    public byte[] getImage(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
         String arg1);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "initializeSIF4Province", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.InitializeSIF4Province")
+    @ResponseWrapper(localName = "initializeSIF4ProvinceResponse", targetNamespace = "http://services.gitproxy.ubicropper.ubitech.eu/", className = "eu.ubitech.ubicropper.gitproxy.service.InitializeSIF4ProvinceResponse")
+    public boolean initializeSIF4Province(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2,
+        @WebParam(name = "arg3", targetNamespace = "")
+        String arg3);
 
 }

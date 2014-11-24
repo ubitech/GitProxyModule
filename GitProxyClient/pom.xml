@@ -5,7 +5,7 @@
   <groupId>eu.ubitech.ubicropper</groupId>
   <artifactId>GitProxyClient</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.1-SNAPSHOT</version>
   <name>GitProxyClient</name>
   <url>http://www.ubitech.eu/ubicropper/GitProxyClient</url>
   <description>GitProxyClient Module</description>
@@ -73,6 +73,7 @@
                                   <wsdlFile>GitProxy.wsdl</wsdlFile> 
                               </wsdlFiles>
                               <verbose>true</verbose>
+                              <!--sourceDestDir>${project.build.sourceDirectory}</sourceDestDir-->
                               <sourceDestDir>${project.build.sourceDirectory}</sourceDestDir>
                           </configuration>
                       </execution>

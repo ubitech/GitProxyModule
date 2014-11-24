@@ -15,7 +15,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,8 +40,8 @@ public class DBSynchronizer {
         String ret = null;
         try {
             String query = "SELECT  commitid FROM sif WHERE idprovincia=? ORDER BY commitdate desc LIMIT 1;";
-            
-            System.out.println("query"+query +" ----- "+ provinceid);
+
+            System.out.println("query" + query + " ----- " + provinceid);
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, provinceid);
             ResultSet rs = preparedStatement.executeQuery();
@@ -124,8 +123,8 @@ public class DBSynchronizer {
                         if (refid != -1) { // i have found it so update
                             updateParent(path, filename, refid);
                         } else { // i have not found it so i have to create it
-                            boolean isfolder = !expfilename.contains(".");
-                            refid = insertItem(exppath, expfilename, commitid, false, false, isfolder);
+                            boolean isfile = expfilename.contains(".");
+                            refid = insertItem(exppath, expfilename, commitid, false, false, isfile);
                             updateParent(path, filename, refid);
                         }
                     }//if
@@ -159,7 +158,7 @@ public class DBSynchronizer {
     /*
      * Adds an Item
      */
-    public int insertItem(String path, String filename, String commitid, boolean missing, boolean inuse, boolean isfolder) {
+    public int insertItem(String path, String filename, String commitid, boolean missing, boolean inuse, boolean isfile) {
         int ret = -1;
         try {
             String query = "Insert into sif "
@@ -177,8 +176,8 @@ public class DBSynchronizer {
             preparedStatement.setTimestamp(5, timestamp);
             preparedStatement.setString(6, "check");
             preparedStatement.setBoolean(7, missing);
-            preparedStatement.setBoolean(8, inuse);
-            preparedStatement.setBoolean(9, isfolder);
+            preparedStatement.setBoolean(8, true);
+            preparedStatement.setBoolean(9, isfile);
             preparedStatement.setInt(10, Configuration.provinceid);
             preparedStatement.executeUpdate();
             //get inserted id
@@ -225,23 +224,23 @@ public class DBSynchronizer {
                 System.out.println("file: " + file);
                 //only files that match docroot will be processed
                 //if (file.startsWith(Configuration.docroot)) {
-                    String[] args = file.split(Configuration.remoteseparator);
-                    if (args.length > 1) { //ignore if only root
-                        int index = 0;
-                        String temp = "";
-                        for (String str : args) {
-                            if (index == 0) {
-                                temp = str;
-                            } else {
-                                temp = temp + Configuration.remoteseparator + str;
-                            }
-                            //System.out.println("Raw-Files:"+ temp);
-                            if ((index > 0) && (!tobeinserted.contains(temp))) {
-                                tobeinserted.add(temp);
-                            }
-                            index++;
-                        }//for                                            
-                    }
+                String[] args = file.split(Configuration.remoteseparator);
+                if (args.length > 1) { //ignore if only root
+                    int index = 0;
+                    String temp = "";
+                    for (String str : args) {
+                        if (index == 0) {
+                            temp = str;
+                        } else {
+                            temp = temp + Configuration.remoteseparator + str;
+                        }
+                        //System.out.println("Raw-Files:"+ temp);
+                        if ((index > 0) && (!tobeinserted.contains(temp))) {
+                            tobeinserted.add(temp);
+                        }
+                        index++;
+                    }//for                                            
+                }
                 //}//if
             }//for
 
@@ -261,15 +260,15 @@ public class DBSynchronizer {
         try {
             connection.setAutoCommit(false);
             for (String str : list) {
-                boolean isfolder = !str.contains(".");
+                boolean isfile = str.contains(".");
                 int index = str.lastIndexOf(Configuration.remoteseparator);
                 String file1, file2 = "";
                 if (index != -1) {
                     file1 = str.substring(0, index);
                     file2 = str.substring(index + 1, str.length());
-                    System.out.println("SQL insert: " + file1 + " " + file2 + " " + isfolder);
+                    System.out.println("SQL insert: " + file1 + " " + file2 + " " + isfile);
                     //Transactionally Insert
-                    insertItem(file1, file2, commit, false, false, isfolder);
+                    insertItem(file1, file2, commit, false, false, isfile);
                 }//if
             }//for
             connection.commit();
@@ -326,8 +325,8 @@ public class DBSynchronizer {
                         }
                         //Invoke insert
                         System.out.println("insertItem: " + file1 + " " + file2 + " " + commit);
-                        boolean isfolder = !file2.contains(".");
-                        insertItem(file1, file2, commit, false, false, isfolder);
+                        boolean isfile = file2.contains(".");
+                        insertItem(file1, file2, commit, false, false, isfile);
                         //TODO invoke Normalization at the end
                     }
                     break;
@@ -363,8 +362,6 @@ public class DBSynchronizer {
 
             // add & commit only files start with docroot
             //TODO
-            
-            
             if (latestlocalcommit == null) { //if null get remote latest commit
                 String remotecommitid = getLatestRemoteCommit(provinceid);
                 if (remotecommitid != null) { //if such a remote commit exists fetch it with contents
@@ -386,7 +383,7 @@ public class DBSynchronizer {
                     System.out.println("getLatestRemoteCommit:" + remoteid);
                     logMap.put("getLatestRemoteCommit:", " getLatestRemoteCommit: " + remoteid + "<br/>");
 
-                    ArrayList<String> diffs = getFilesBetweenTwoCommits(latestlocalcommit, remoteid,provinceid);
+                    ArrayList<String> diffs = getFilesBetweenTwoCommits(latestlocalcommit, remoteid, provinceid);
 //                    for (String dif : diffs) {
 //                        System.out.println("dif:" + dif);
 //                        String[] ops = dif.split("_");
@@ -413,12 +410,12 @@ public class DBSynchronizer {
         try {
             service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
             GitSOAPService port = service.getGitSOAPServicePort();
-            System.out.println("port"+ port.toString());
+            System.out.println("port" + port.toString());
             BindingProvider bp = (BindingProvider) port;
             bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
             //1 - get latest revision
-            System.out.println(Configuration.wstoken+"--"+provinceid);
-            ret = port.getLatestRevision(Configuration.wstoken,provinceid);
+            System.out.println(Configuration.wstoken + "--" + provinceid);
+            ret = port.getLatestRevision(Configuration.wstoken, provinceid);
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
@@ -437,10 +434,10 @@ public class DBSynchronizer {
             BindingProvider bp = (BindingProvider) port;
             bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
             //1 - get latest revision
-            String latest = port.getLatestRevision(Configuration.wstoken,provinceid);
+            String latest = port.getLatestRevision(Configuration.wstoken, provinceid);
             System.out.println("latest:" + latest);
             //2 - get Files of 
-            ret = (ArrayList<String>) port.getFilesOfCommit(Configuration.wstoken, latest,provinceid);
+            ret = (ArrayList<String>) port.getFilesOfCommit(Configuration.wstoken, latest, provinceid);
             for (String file : ret) {
                 System.out.println("file:" + file);
             }
@@ -451,7 +448,7 @@ public class DBSynchronizer {
         return ret;
     }//EoM
 
-    public static ArrayList<String> getFilesBetweenTwoCommits(String oldcommit, String newcommit,String provinceid) {
+    public static ArrayList<String> getFilesBetweenTwoCommits(String oldcommit, String newcommit, String provinceid) {
         ArrayList<String> ret = new ArrayList();
         String endpoint = Configuration.wsendpoint;
         String wsdl = endpoint + "?wsdl";
@@ -462,7 +459,7 @@ public class DBSynchronizer {
             BindingProvider bp = (BindingProvider) port;
             bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
             //1 - Web-Service Invocation 
-            ret = (ArrayList<String>) port.getFilesBetweenTwoCommits(Configuration.wstoken, oldcommit, newcommit,provinceid);
+            ret = (ArrayList<String>) port.getFilesBetweenTwoCommits(Configuration.wstoken, oldcommit, newcommit, provinceid);
             for (String file : ret) {
                 System.out.println("diff-file:" + file);
             }
@@ -472,5 +469,123 @@ public class DBSynchronizer {
         }
         return ret;
     }//EoM    
+
+    public boolean deleteImage(String imageLocation) {
+        boolean ret = false;
+        String endpoint = Configuration.wsendpoint;
+        String wsdl = endpoint + "?wsdl";
+        GitSOAPServiceService service;
+        try {
+            service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
+            GitSOAPService port = service.getGitSOAPServicePort();
+            BindingProvider bp = (BindingProvider) port;
+            bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+            //1 - Web-Service Invocation 
+            ret = port.deleteImage(Configuration.wstoken, imageLocation);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }//EoM   
+
+    public boolean saveImageToCERIFBook(String newImagePathURIFolderPath, byte[] image, String filepath) {
+
+        boolean ret = false;
+        String endpoint = Configuration.wsendpoint;
+        String wsdl = endpoint + "?wsdl";
+        GitSOAPServiceService service;
+        try {
+            service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
+            GitSOAPService port = service.getGitSOAPServicePort();
+            BindingProvider bp = (BindingProvider) port;
+            bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+            //1 - Web-Service Invocation 
+
+            ret = port.saveImageToCERIFBook(Configuration.wstoken, newImagePathURIFolderPath, image, filepath);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }//EoM   
+
+    public boolean saveImage(byte[] image, String filepath) {
+
+        boolean ret = false;
+        String endpoint = Configuration.wsendpoint;
+        String wsdl = endpoint + "?wsdl";
+        GitSOAPServiceService service;
+        try {
+            service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
+            GitSOAPService port = service.getGitSOAPServicePort();
+            BindingProvider bp = (BindingProvider) port;
+            bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+            //1 - Web-Service Invocation 
+
+            ret = port.saveImage(Configuration.wstoken, image, filepath);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }//EoM 
+
+    public boolean manageTmpFolder(String tempFolderURI) {
+
+        boolean ret = false;
+        String endpoint = Configuration.wsendpoint;
+        String wsdl = endpoint + "?wsdl";
+        GitSOAPServiceService service;
+        try {
+            service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
+            GitSOAPService port = service.getGitSOAPServicePort();
+            BindingProvider bp = (BindingProvider) port;
+            bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+            //1 - Web-Service Invocation 
+
+            ret = port.manageTmpFolder(Configuration.wstoken, tempFolderURI);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }//EoM   
+
+    public byte[] getImage(String filepath) {
+
+        byte[] ret = null;
+        String endpoint = Configuration.wsendpoint;
+        String wsdl = endpoint + "?wsdl";
+        GitSOAPServiceService service;
+        try {
+            service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
+            GitSOAPService port = service.getGitSOAPServicePort();
+            BindingProvider bp = (BindingProvider) port;
+            bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+            //1 - Web-Service Invocation 
+
+            ret = port.getImage(Configuration.wstoken, filepath);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }//EoM  
+
+    public boolean initializeSIF4Province(String SIFFolderURI, String idprovince, String provinciaName) {
+
+        boolean ret = false;
+        String endpoint = Configuration.wsendpoint;
+        String wsdl = endpoint + "?wsdl";
+        GitSOAPServiceService service;
+        try {
+            service = new GitSOAPServiceService(new URL(wsdl), new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "GitSOAPServiceService"));
+            GitSOAPService port = service.getGitSOAPServicePort();
+            BindingProvider bp = (BindingProvider) port;
+            bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+            //1 - Web-Service Invocation 
+
+            ret = port.initializeSIF4Province(Configuration.wstoken, SIFFolderURI, idprovince, provinciaName);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }//EoM  
 
 }//EoC

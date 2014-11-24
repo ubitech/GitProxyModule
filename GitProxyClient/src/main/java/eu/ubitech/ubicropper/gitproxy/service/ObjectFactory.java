@@ -28,100 +28,33 @@ public class ObjectFactory {
     private final static QName _GetLatestRevisionResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getLatestRevisionResponse");
     private final static QName _GetLatestRevision_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getLatestRevision");
     private final static QName _SaveImageToCERIFBook_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "saveImageToCERIFBook");
+    private final static QName _InitializeSIF4Province_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "initializeSIF4Province");
     private final static QName _EchoResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echoResponse");
     private final static QName _GetImage_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getImage");
     private final static QName _SaveImageToCERIFBookResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "saveImageToCERIFBookResponse");
     private final static QName _ManageTmpFolder_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "manageTmpFolder");
+    private final static QName _SaveImage_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "saveImage");
     private final static QName _GetFilesBetweenTwoCommits_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesBetweenTwoCommits");
     private final static QName _GetAllRevisions_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getAllRevisions");
+    private final static QName _InitializeSIF4ProvinceResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "initializeSIF4ProvinceResponse");
     private final static QName _DeleteImageResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "deleteImageResponse");
     private final static QName _GetFilesBetweenTwoCommitsResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesBetweenTwoCommitsResponse");
     private final static QName _GetFilesOfCommit_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommit");
     private final static QName _GetImageResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getImageResponse");
+    private final static QName _SaveImageResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "saveImageResponse");
     private final static QName _DeleteImage_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "deleteImage");
     private final static QName _Echo_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echo");
     private final static QName _ManageTmpFolderResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "manageTmpFolderResponse");
     private final static QName _GetFilesOfCommitResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommitResponse");
     private final static QName _SaveImageToCERIFBookArg2_QNAME = new QName("", "arg2");
     private final static QName _GetImageResponseReturn_QNAME = new QName("", "return");
+    private final static QName _SaveImageArg1_QNAME = new QName("", "arg1");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: eu.ubitech.ubicropper.gitproxy.service
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link GetLatestRevision }
-     * 
-     */
-    public GetLatestRevision createGetLatestRevision() {
-        return new GetLatestRevision();
-    }
-
-    /**
-     * Create an instance of {@link SaveImageToCERIFBookResponse }
-     * 
-     */
-    public SaveImageToCERIFBookResponse createSaveImageToCERIFBookResponse() {
-        return new SaveImageToCERIFBookResponse();
-    }
-
-    /**
-     * Create an instance of {@link DeleteImageResponse }
-     * 
-     */
-    public DeleteImageResponse createDeleteImageResponse() {
-        return new DeleteImageResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetImage }
-     * 
-     */
-    public GetImage createGetImage() {
-        return new GetImage();
-    }
-
-    /**
-     * Create an instance of {@link GetLatestRevisionResponse }
-     * 
-     */
-    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
-        return new GetLatestRevisionResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetFilesOfCommitResponse }
-     * 
-     */
-    public GetFilesOfCommitResponse createGetFilesOfCommitResponse() {
-        return new GetFilesOfCommitResponse();
-    }
-
-    /**
-     * Create an instance of {@link Echo }
-     * 
-     */
-    public Echo createEcho() {
-        return new Echo();
-    }
-
-    /**
-     * Create an instance of {@link ManageTmpFolderResponse }
-     * 
-     */
-    public ManageTmpFolderResponse createManageTmpFolderResponse() {
-        return new ManageTmpFolderResponse();
-    }
-
-    /**
-     * Create an instance of {@link ManageTmpFolder }
-     * 
-     */
-    public ManageTmpFolder createManageTmpFolder() {
-        return new ManageTmpFolder();
     }
 
     /**
@@ -133,19 +66,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAllRevisions }
+     * Create an instance of {@link SaveImageToCERIFBook }
      * 
      */
-    public GetAllRevisions createGetAllRevisions() {
-        return new GetAllRevisions();
+    public SaveImageToCERIFBook createSaveImageToCERIFBook() {
+        return new SaveImageToCERIFBook();
     }
 
     /**
-     * Create an instance of {@link GetFilesOfCommit }
+     * Create an instance of {@link GetLatestRevisionResponse }
      * 
      */
-    public GetFilesOfCommit createGetFilesOfCommit() {
-        return new GetFilesOfCommit();
+    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
+        return new GetLatestRevisionResponse();
     }
 
     /**
@@ -157,27 +90,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SaveImageToCERIFBook }
+     * Create an instance of {@link GetFilesOfCommit }
      * 
      */
-    public SaveImageToCERIFBook createSaveImageToCERIFBook() {
-        return new SaveImageToCERIFBook();
+    public GetFilesOfCommit createGetFilesOfCommit() {
+        return new GetFilesOfCommit();
     }
 
     /**
-     * Create an instance of {@link DeleteImage }
+     * Create an instance of {@link ManageTmpFolderResponse }
      * 
      */
-    public DeleteImage createDeleteImage() {
-        return new DeleteImage();
-    }
-
-    /**
-     * Create an instance of {@link GetAllRevisionsResponse }
-     * 
-     */
-    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
-        return new GetAllRevisionsResponse();
+    public ManageTmpFolderResponse createManageTmpFolderResponse() {
+        return new ManageTmpFolderResponse();
     }
 
     /**
@@ -189,11 +114,123 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetLatestRevision }
+     * 
+     */
+    public GetLatestRevision createGetLatestRevision() {
+        return new GetLatestRevision();
+    }
+
+    /**
+     * Create an instance of {@link DeleteImage }
+     * 
+     */
+    public DeleteImage createDeleteImage() {
+        return new DeleteImage();
+    }
+
+    /**
+     * Create an instance of {@link SaveImage }
+     * 
+     */
+    public SaveImage createSaveImage() {
+        return new SaveImage();
+    }
+
+    /**
+     * Create an instance of {@link GetFilesOfCommitResponse }
+     * 
+     */
+    public GetFilesOfCommitResponse createGetFilesOfCommitResponse() {
+        return new GetFilesOfCommitResponse();
+    }
+
+    /**
+     * Create an instance of {@link SaveImageToCERIFBookResponse }
+     * 
+     */
+    public SaveImageToCERIFBookResponse createSaveImageToCERIFBookResponse() {
+        return new SaveImageToCERIFBookResponse();
+    }
+
+    /**
+     * Create an instance of {@link InitializeSIF4ProvinceResponse }
+     * 
+     */
+    public InitializeSIF4ProvinceResponse createInitializeSIF4ProvinceResponse() {
+        return new InitializeSIF4ProvinceResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteImageResponse }
+     * 
+     */
+    public DeleteImageResponse createDeleteImageResponse() {
+        return new DeleteImageResponse();
+    }
+
+    /**
+     * Create an instance of {@link SaveImageResponse }
+     * 
+     */
+    public SaveImageResponse createSaveImageResponse() {
+        return new SaveImageResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllRevisions }
+     * 
+     */
+    public GetAllRevisions createGetAllRevisions() {
+        return new GetAllRevisions();
+    }
+
+    /**
+     * Create an instance of {@link Echo }
+     * 
+     */
+    public Echo createEcho() {
+        return new Echo();
+    }
+
+    /**
+     * Create an instance of {@link GetAllRevisionsResponse }
+     * 
+     */
+    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
+        return new GetAllRevisionsResponse();
+    }
+
+    /**
+     * Create an instance of {@link ManageTmpFolder }
+     * 
+     */
+    public ManageTmpFolder createManageTmpFolder() {
+        return new ManageTmpFolder();
+    }
+
+    /**
      * Create an instance of {@link GetImageResponse }
      * 
      */
     public GetImageResponse createGetImageResponse() {
         return new GetImageResponse();
+    }
+
+    /**
+     * Create an instance of {@link InitializeSIF4Province }
+     * 
+     */
+    public InitializeSIF4Province createInitializeSIF4Province() {
+        return new InitializeSIF4Province();
+    }
+
+    /**
+     * Create an instance of {@link GetImage }
+     * 
+     */
+    public GetImage createGetImage() {
+        return new GetImage();
     }
 
     /**
@@ -233,6 +270,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InitializeSIF4Province }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "initializeSIF4Province")
+    public JAXBElement<InitializeSIF4Province> createInitializeSIF4Province(InitializeSIF4Province value) {
+        return new JAXBElement<InitializeSIF4Province>(_InitializeSIF4Province_QNAME, InitializeSIF4Province.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link EchoResponse }{@code >}}
      * 
      */
@@ -269,6 +315,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SaveImage }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "saveImage")
+    public JAXBElement<SaveImage> createSaveImage(SaveImage value) {
+        return new JAXBElement<SaveImage>(_SaveImage_QNAME, SaveImage.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetFilesBetweenTwoCommits }{@code >}}
      * 
      */
@@ -284,6 +339,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getAllRevisions")
     public JAXBElement<GetAllRevisions> createGetAllRevisions(GetAllRevisions value) {
         return new JAXBElement<GetAllRevisions>(_GetAllRevisions_QNAME, GetAllRevisions.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InitializeSIF4ProvinceResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "initializeSIF4ProvinceResponse")
+    public JAXBElement<InitializeSIF4ProvinceResponse> createInitializeSIF4ProvinceResponse(InitializeSIF4ProvinceResponse value) {
+        return new JAXBElement<InitializeSIF4ProvinceResponse>(_InitializeSIF4ProvinceResponse_QNAME, InitializeSIF4ProvinceResponse.class, null, value);
     }
 
     /**
@@ -320,6 +384,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "getImageResponse")
     public JAXBElement<GetImageResponse> createGetImageResponse(GetImageResponse value) {
         return new JAXBElement<GetImageResponse>(_GetImageResponse_QNAME, GetImageResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SaveImageResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.gitproxy.ubicropper.ubitech.eu/", name = "saveImageResponse")
+    public JAXBElement<SaveImageResponse> createSaveImageResponse(SaveImageResponse value) {
+        return new JAXBElement<SaveImageResponse>(_SaveImageResponse_QNAME, SaveImageResponse.class, null, value);
     }
 
     /**
@@ -374,6 +447,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "return", scope = GetImageResponse.class)
     public JAXBElement<byte[]> createGetImageResponseReturn(byte[] value) {
         return new JAXBElement<byte[]>(_GetImageResponseReturn_QNAME, byte[].class, GetImageResponse.class, ((byte[]) value));
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link byte[]}{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "arg1", scope = SaveImage.class)
+    public JAXBElement<byte[]> createSaveImageArg1(byte[] value) {
+        return new JAXBElement<byte[]>(_SaveImageArg1_QNAME, byte[].class, SaveImage.class, ((byte[]) value));
     }
 
 }

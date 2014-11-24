@@ -21,7 +21,7 @@ public class LoggerFactory {
                 if (instance == null) {                   
                     instance = Logger.getLogger("GitProxyLogger");
                     try{
-                        FileHandler fh =  new FileHandler("gitproxy.log", true);
+                        FileHandler fh =  new FileHandler("../standalone/log/gitproxy.log", true);
                         instance.addHandler(fh);
                         SimpleFormatter formatter = new SimpleFormatter();  
                         fh.setFormatter(formatter);         
