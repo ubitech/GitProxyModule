@@ -29,9 +29,24 @@ public class DBSynchronizer {
 
     Connection connection;
 
-    public DBSynchronizer() {
+//    public DBSynchronizer() {
+//        connection = ConnectionFactory.getInstance();
+//    }//Constructor
+    public void establishConnection() {
         connection = ConnectionFactory.getInstance();
-    }//Constructor
+    }
+
+    public void closeConnection() {
+        try {
+
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+            connection = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /*
      * Fetch newest commit first
@@ -49,6 +64,8 @@ public class DBSynchronizer {
                 ret = rs.getString("commitid");
                 break;
             }
+            rs.close();
+            preparedStatement.close();
         } //EoM
         catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,6 +88,8 @@ public class DBSynchronizer {
                 ret = true;
                 break;
             }
+            rs.close();
+            preparedStatement.close();
         } //EoM
         catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,6 +113,8 @@ public class DBSynchronizer {
                 ret = rs.getInt("idsif");
                 break;
             }
+            rs.close();
+            preparedStatement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,6 +153,8 @@ public class DBSynchronizer {
             }//while           
 
             connection.commit();
+            rs.close();
+            preparedStatement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -150,9 +173,12 @@ public class DBSynchronizer {
             preparedStatement.setString(3, filename);
             preparedStatement.executeUpdate();
 
+            preparedStatement.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//EoM updateParent    
 
     /*
@@ -186,6 +212,9 @@ public class DBSynchronizer {
                 ret = rs.getInt(1);
             }
 
+            rs.close();
+            preparedStatement.close();
+
         } //EoM
         catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,6 +240,8 @@ public class DBSynchronizer {
             preparedStatement.setString(4, path);
             preparedStatement.setString(5, filename);
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(DBSynchronizer.class.getName()).log(Level.SEVERE, null, ex);
@@ -334,6 +365,7 @@ public class DBSynchronizer {
                 } //switch
             }//for
             connection.commit();
+
         } catch (Exception ex) {
             try {
                 connection.rollback(); // Do we need this?
@@ -502,6 +534,7 @@ public class DBSynchronizer {
             //1 - Web-Service Invocation 
 
             ret = port.saveImageToCERIFBook(Configuration.wstoken, newImagePathURIFolderPath, image, filepath);
+
         } catch (MalformedURLException ex) {
             Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -582,9 +615,11 @@ public class DBSynchronizer {
             //1 - Web-Service Invocation 
 
             ret = port.initializeSIF4Province(Configuration.wstoken, SIFFolderURI, idprovince, provinciaName);
+
         } catch (MalformedURLException ex) {
             Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return ret;
     }//EoM  
 

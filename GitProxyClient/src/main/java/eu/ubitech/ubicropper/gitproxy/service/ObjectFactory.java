@@ -46,9 +46,9 @@ public class ObjectFactory {
     private final static QName _Echo_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "echo");
     private final static QName _ManageTmpFolderResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "manageTmpFolderResponse");
     private final static QName _GetFilesOfCommitResponse_QNAME = new QName("http://services.gitproxy.ubicropper.ubitech.eu/", "getFilesOfCommitResponse");
+    private final static QName _SaveImageArg1_QNAME = new QName("", "arg1");
     private final static QName _SaveImageToCERIFBookArg2_QNAME = new QName("", "arg2");
     private final static QName _GetImageResponseReturn_QNAME = new QName("", "return");
-    private final static QName _SaveImageArg1_QNAME = new QName("", "arg1");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: eu.ubitech.ubicropper.gitproxy.service
@@ -58,59 +58,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
+     * Create an instance of {@link InitializeSIF4Province }
      * 
      */
-    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
-        return new GetFilesBetweenTwoCommitsResponse();
+    public InitializeSIF4Province createInitializeSIF4Province() {
+        return new InitializeSIF4Province();
     }
 
     /**
-     * Create an instance of {@link SaveImageToCERIFBook }
+     * Create an instance of {@link SaveImageToCERIFBookResponse }
      * 
      */
-    public SaveImageToCERIFBook createSaveImageToCERIFBook() {
-        return new SaveImageToCERIFBook();
+    public SaveImageToCERIFBookResponse createSaveImageToCERIFBookResponse() {
+        return new SaveImageToCERIFBookResponse();
     }
 
     /**
-     * Create an instance of {@link GetLatestRevisionResponse }
+     * Create an instance of {@link GetImage }
      * 
      */
-    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
-        return new GetLatestRevisionResponse();
+    public GetImage createGetImage() {
+        return new GetImage();
     }
 
     /**
-     * Create an instance of {@link GetFilesBetweenTwoCommits }
+     * Create an instance of {@link GetAllRevisionsResponse }
      * 
      */
-    public GetFilesBetweenTwoCommits createGetFilesBetweenTwoCommits() {
-        return new GetFilesBetweenTwoCommits();
+    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
+        return new GetAllRevisionsResponse();
     }
 
     /**
-     * Create an instance of {@link GetFilesOfCommit }
+     * Create an instance of {@link SaveImageResponse }
      * 
      */
-    public GetFilesOfCommit createGetFilesOfCommit() {
-        return new GetFilesOfCommit();
+    public SaveImageResponse createSaveImageResponse() {
+        return new SaveImageResponse();
     }
 
     /**
-     * Create an instance of {@link ManageTmpFolderResponse }
+     * Create an instance of {@link Echo }
      * 
      */
-    public ManageTmpFolderResponse createManageTmpFolderResponse() {
-        return new ManageTmpFolderResponse();
+    public Echo createEcho() {
+        return new Echo();
     }
 
     /**
-     * Create an instance of {@link EchoResponse }
+     * Create an instance of {@link SaveImage }
      * 
      */
-    public EchoResponse createEchoResponse() {
-        return new EchoResponse();
+    public SaveImage createSaveImage() {
+        return new SaveImage();
     }
 
     /**
@@ -130,11 +130,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SaveImage }
+     * Create an instance of {@link GetFilesBetweenTwoCommits }
      * 
      */
-    public SaveImage createSaveImage() {
-        return new SaveImage();
+    public GetFilesBetweenTwoCommits createGetFilesBetweenTwoCommits() {
+        return new GetFilesBetweenTwoCommits();
     }
 
     /**
@@ -146,22 +146,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SaveImageToCERIFBookResponse }
-     * 
-     */
-    public SaveImageToCERIFBookResponse createSaveImageToCERIFBookResponse() {
-        return new SaveImageToCERIFBookResponse();
-    }
-
-    /**
-     * Create an instance of {@link InitializeSIF4ProvinceResponse }
-     * 
-     */
-    public InitializeSIF4ProvinceResponse createInitializeSIF4ProvinceResponse() {
-        return new InitializeSIF4ProvinceResponse();
-    }
-
-    /**
      * Create an instance of {@link DeleteImageResponse }
      * 
      */
@@ -170,11 +154,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SaveImageResponse }
+     * Create an instance of {@link GetFilesBetweenTwoCommitsResponse }
      * 
      */
-    public SaveImageResponse createSaveImageResponse() {
-        return new SaveImageResponse();
+    public GetFilesBetweenTwoCommitsResponse createGetFilesBetweenTwoCommitsResponse() {
+        return new GetFilesBetweenTwoCommitsResponse();
+    }
+
+    /**
+     * Create an instance of {@link EchoResponse }
+     * 
+     */
+    public EchoResponse createEchoResponse() {
+        return new EchoResponse();
     }
 
     /**
@@ -186,27 +178,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Echo }
+     * Create an instance of {@link InitializeSIF4ProvinceResponse }
      * 
      */
-    public Echo createEcho() {
-        return new Echo();
+    public InitializeSIF4ProvinceResponse createInitializeSIF4ProvinceResponse() {
+        return new InitializeSIF4ProvinceResponse();
     }
 
     /**
-     * Create an instance of {@link GetAllRevisionsResponse }
+     * Create an instance of {@link ManageTmpFolderResponse }
      * 
      */
-    public GetAllRevisionsResponse createGetAllRevisionsResponse() {
-        return new GetAllRevisionsResponse();
+    public ManageTmpFolderResponse createManageTmpFolderResponse() {
+        return new ManageTmpFolderResponse();
     }
 
     /**
-     * Create an instance of {@link ManageTmpFolder }
+     * Create an instance of {@link SaveImageToCERIFBook }
      * 
      */
-    public ManageTmpFolder createManageTmpFolder() {
-        return new ManageTmpFolder();
+    public SaveImageToCERIFBook createSaveImageToCERIFBook() {
+        return new SaveImageToCERIFBook();
+    }
+
+    /**
+     * Create an instance of {@link GetLatestRevisionResponse }
+     * 
+     */
+    public GetLatestRevisionResponse createGetLatestRevisionResponse() {
+        return new GetLatestRevisionResponse();
     }
 
     /**
@@ -218,19 +218,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link InitializeSIF4Province }
+     * Create an instance of {@link GetFilesOfCommit }
      * 
      */
-    public InitializeSIF4Province createInitializeSIF4Province() {
-        return new InitializeSIF4Province();
+    public GetFilesOfCommit createGetFilesOfCommit() {
+        return new GetFilesOfCommit();
     }
 
     /**
-     * Create an instance of {@link GetImage }
+     * Create an instance of {@link ManageTmpFolder }
      * 
      */
-    public GetImage createGetImage() {
-        return new GetImage();
+    public ManageTmpFolder createManageTmpFolder() {
+        return new ManageTmpFolder();
     }
 
     /**
@@ -435,6 +435,15 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link byte[]}{@code >}}
      * 
      */
+    @XmlElementDecl(namespace = "", name = "arg1", scope = SaveImage.class)
+    public JAXBElement<byte[]> createSaveImageArg1(byte[] value) {
+        return new JAXBElement<byte[]>(_SaveImageArg1_QNAME, byte[].class, SaveImage.class, ((byte[]) value));
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link byte[]}{@code >}}
+     * 
+     */
     @XmlElementDecl(namespace = "", name = "arg2", scope = SaveImageToCERIFBook.class)
     public JAXBElement<byte[]> createSaveImageToCERIFBookArg2(byte[] value) {
         return new JAXBElement<byte[]>(_SaveImageToCERIFBookArg2_QNAME, byte[].class, SaveImageToCERIFBook.class, ((byte[]) value));
@@ -447,15 +456,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "return", scope = GetImageResponse.class)
     public JAXBElement<byte[]> createGetImageResponseReturn(byte[] value) {
         return new JAXBElement<byte[]>(_GetImageResponseReturn_QNAME, byte[].class, GetImageResponse.class, ((byte[]) value));
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link byte[]}{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "arg1", scope = SaveImage.class)
-    public JAXBElement<byte[]> createSaveImageArg1(byte[] value) {
-        return new JAXBElement<byte[]>(_SaveImageArg1_QNAME, byte[].class, SaveImage.class, ((byte[]) value));
     }
 
 }

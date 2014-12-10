@@ -25,7 +25,9 @@ public class UpdateController {
         UpdateController updatecontroller = new UpdateController();
         updatecontroller.readProperties(dbport, dbip, username, password, dbname, wsendpoint, wstoken, docroot, remoteseparator, provinceid);
         DBSynchronizer dbsynchronizer = new DBSynchronizer();
+        dbsynchronizer.establishConnection();
         Map logMap = dbsynchronizer.SynchronizeDatabase(provinceid);
+        dbsynchronizer.closeConnection();
         return logMap;
     }
 
